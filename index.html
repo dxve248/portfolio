@@ -980,6 +980,22 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
+        /* ===== GITHUB LINK (project cards) ===== */
+        .github-link {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.65rem 1.1rem; border-radius: 10px;
+            background: transparent; border: 1px solid var(--border);
+            color: var(--text); font-size: 0.8rem; font-weight: 600;
+            text-decoration: none; font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+        }
+        .github-link svg { width: 15px; height: 15px; transition: transform 0.3s; }
+        .github-link:hover {
+            border-color: var(--accent); background: var(--accent-glow-2);
+            transform: translateY(-2px);
+        }
+        .github-link:hover svg { transform: translate(2px, -2px); }
+
         /* ===== TESTIMONIALS ===== */
         .testimonials-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -1996,6 +2012,168 @@
                         <span class="project-tag">Compliance</span>
                         <span class="project-tag">UAE Gov</span>
                         <span class="project-tag">DARB</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-visual">
+                    <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=340&fit=crop" alt="IT Helpdesk Ticketing System" loading="lazy">
+                    <div class="project-overlay">
+                        <div class="project-metric">
+                            <div class="project-metric-num">3</div>
+                            <div class="project-metric-label">User Roles</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3>IT Helpdesk Ticketing System</h3>
+                    <p>Full-featured helpdesk platform built with Django — role-based access, priority SLA tracking with live overdue detection, TOTP two-factor auth, knowledge base, asset inventory, and analytics with CSV/Excel export.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Django</span>
+                        <span class="project-tag">SQLite</span>
+                        <span class="project-tag">Bootstrap 5</span>
+                        <span class="project-tag">Chart.js</span>
+                    </div>
+                    <div style="margin-top:1.25rem;">
+                        <a href="https://github.com/dxve248/ticket-system" target="_blank" rel="noopener" class="github-link">
+                            View on GitHub
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card reveal reveal-delay-1">
+                <div class="project-visual">
+                    <img src="https://images.unsplash.com/photo-1507146426996-ef05306b995a?w=600&h=340&fit=crop" alt="Real-Time Object Detection" loading="lazy">
+                    <div class="project-overlay">
+                        <div class="project-metric">
+                            <div class="project-metric-num">YOLOv8</div>
+                            <div class="project-metric-label">Model</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3>Real-Time Object Detection</h3>
+                    <p>End-to-end YOLOv8 computer vision pipeline — training with MLflow tracking, FastAPI REST API, WebSocket real-time streaming, A/B testing, drift detection, GPU optimization, Docker, and GitHub Actions CI/CD.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">YOLOv8</span>
+                        <span class="project-tag">PyTorch</span>
+                        <span class="project-tag">FastAPI</span>
+                        <span class="project-tag">Docker</span>
+                    </div>
+                    <div style="margin-top:1.25rem;">
+                        <a href="https://github.com/dxve248/Object-Detection" target="_blank" rel="noopener" class="github-link">
+                            View on GitHub
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card reveal reveal-delay-2">
+                <div class="project-visual">
+                    <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=340&fit=crop" alt="Mini-SIEM" loading="lazy">
+                    <div class="project-overlay">
+                        <div class="project-metric">
+                            <div class="project-metric-num">0-100</div>
+                            <div class="project-metric-label">Risk Score</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3>Mini-SIEM</h3>
+                    <p>Lightweight security and event management pipeline in Python — multi-format log ingestion, rule-based detection with alert suppression, incident correlation, risk scoring, and a Flask + Chart.js triage dashboard.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Flask</span>
+                        <span class="project-tag">Detection Engine</span>
+                        <span class="project-tag">SQLite</span>
+                        <span class="project-tag">Chart.js</span>
+                    </div>
+                    <div style="margin-top:1.25rem;">
+                        <a href="https://github.com/dxve248/mini-siem" target="_blank" rel="noopener" class="github-link">
+                            View on GitHub
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card reveal reveal-delay-3">
+                <div class="project-visual">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=340&fit=crop" alt="Secure Task Manager" loading="lazy">
+                    <div class="project-overlay">
+                        <div class="project-metric">
+                            <div class="project-metric-num">JWT</div>
+                            <div class="project-metric-label">Secure Auth</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3>Secure Task Manager</h3>
+                    <p>Full-stack task management app hardened with JWT authentication, rotating refresh tokens, field-level AES encryption, rate limiting, email enumeration protection, and OWASP ZAP DAST scanning.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Node.js</span>
+                        <span class="project-tag">Express</span>
+                        <span class="project-tag">React</span>
+                        <span class="project-tag">SQLite</span>
+                    </div>
+                    <div style="margin-top:1.25rem;">
+                        <a href="https://github.com/dxve248/STM" target="_blank" rel="noopener" class="github-link">
+                            View on GitHub
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-visual">
+                    <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=600&h=340&fit=crop" alt="Voice-to-Notes" loading="lazy">
+                    <div class="project-overlay">
+                        <div class="project-metric">
+                            <div class="project-metric-num">100%</div>
+                            <div class="project-metric-label">Local & Private</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3>Voice-to-Notes</h3>
+                    <p>Local-first transcription pipeline — watches a folder for voice memos, transcribes them with faster-whisper, extracts action items with Ollama, and appends checkbox bullets to daily markdown notes. Nothing leaves your machine.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Whisper</span>
+                        <span class="project-tag">Ollama</span>
+                        <span class="project-tag">Automation</span>
+                        <span class="project-tag">Markdown</span>
+                    </div>
+                    <div style="margin-top:1.25rem;">
+                        <a href="https://github.com/dxve248/Voice-to-Notes" target="_blank" rel="noopener" class="github-link">
+                            View on GitHub
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card reveal reveal-delay-1">
+                <div class="project-visual">
+                    <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&h=340&fit=crop" alt="Midnight Marquee" loading="lazy">
+                    <div class="project-overlay">
+                        <div class="project-metric">
+                            <div class="project-metric-num">50+</div>
+                            <div class="project-metric-label">Films & Series</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3>Midnight Marquee</h3>
+                    <p>Netflix-style streaming catalog built with React — 50+ curated films and series with full metadata, full-text search, "My List" favorites, embedded YouTube player, page transitions, and a polished responsive dark UI.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">React</span>
+                        <span class="project-tag">React Router</span>
+                        <span class="project-tag">Vite</span>
+                        <span class="project-tag">Context API</span>
+                    </div>
+                    <div style="margin-top:1.25rem;">
+                        <a href="https://github.com/dxve248/stream-vault" target="_blank" rel="noopener" class="github-link">
+                            View on GitHub
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                        </a>
                     </div>
                 </div>
             </div>
