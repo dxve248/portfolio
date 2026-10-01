@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Christian Dave Sicat</title>
-    <meta name="description" content="Portfolio of Christian Dave Sicat â€” IT Administrator, Automation Specialist, and Creative Computing graduate based in Dubai, UAE.">
-    <meta property="og:title" content="Christian Dave Sicat â€” IT Administrator & Automation Specialist">
+    <meta name="description" content="Portfolio of Christian Dave Sicat — IT Administrator, Automation Specialist, and Creative Computing graduate based in Dubai, UAE.">
+    <meta property="og:title" content="Christian Dave Sicat — IT Administrator & Automation Specialist">
     <meta property="og:description" content="Bridging technical infrastructure, AI-powered automation, and cross-functional project management. Based in Dubai, UAE.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://avatars.githubusercontent.com/u/dxve248">
@@ -381,7 +381,7 @@
             margin-top: 1.25rem; border-radius: 2px;
         }
 
-        /* ===== ABOUT â€” BENTO GRID ===== */
+        /* ===== ABOUT — BENTO GRID ===== */
         .bento {
             display: grid;
             grid-template-columns: 280px 1.2fr 0.8fr;
@@ -437,9 +437,19 @@
             margin-bottom: 1.25rem;
         }
         .bento-about p strong { color: var(--text); font-weight: 600; }
+        .about-highlight {
+            display: flex; align-items: center; gap: 0.65rem;
+            background: linear-gradient(90deg, rgba(124,106,255,0.12), rgba(52,211,153,0.06));
+            border: 1px dashed color-mix(in srgb, var(--accent) 40%, transparent);
+            border-radius: var(--radius-sm);
+            padding: 0.9rem 1.1rem; margin-top: 1.5rem;
+            font-size: 0.85rem; color: var(--text-2);
+        }
+        .about-highlight strong { color: var(--text); font-weight: 600; }
+        .about-highlight-icon { font-size: 1.05rem; line-height: 1; }
         .stat-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
-            margin-top: 1.5rem;
+            margin-top: 1.2rem;
         }
         .stat-item {
             padding: 1.25rem; background: var(--bg-3);
@@ -486,11 +496,12 @@
             border-radius: 100px;
         }
 
-        /* ===== SKILLS â€” INTERACTIVE ===== */
+        /* ===== SKILLS — INTERACTIVE ===== */
         .skills-showcase {
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
         }
         .skill-card {
+            --sc: #7c6aff;
             background: var(--bg-2); border: 1px solid var(--border);
             border-radius: var(--radius); padding: 2rem;
             position: relative; overflow: hidden;
@@ -501,44 +512,71 @@
         .skill-card::before {
             content: ''; position: absolute; inset: 0;
             background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-                rgba(124,106,255,0.06) 0%, transparent 60%);
+                color-mix(in srgb, var(--sc) 10%, transparent) 0%, transparent 60%);
             opacity: 0; transition: opacity 0.4s;
         }
-        .skill-card:hover::before { opacity: 1; }
-        .skill-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-6px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        .skill-card::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--sc), transparent);
+            opacity: 0; transition: opacity 0.4s;
         }
+        .skill-card:hover::before,
+        .skill-card:hover::after { opacity: 1; }
+        .skill-card:hover {
+            border-color: color-mix(in srgb, var(--sc) 45%, transparent);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px color-mix(in srgb, var(--sc) 18%, transparent);
+        }
+        .skill-card-num {
+            position: absolute; top: 1.1rem; right: 1.25rem;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600;
+            letter-spacing: 0.08em; color: var(--text-3); opacity: 0.6;
+            transition: opacity 0.3s, color 0.3s;
+        }
+        .skill-card:hover .skill-card-num { opacity: 1; color: var(--sc); }
         .skill-card-icon {
             width: 52px; height: 52px;
-            background: var(--accent-glow);
+            background: color-mix(in srgb, var(--sc) 12%, transparent);
             border-radius: 14px; display: flex;
             align-items: center; justify-content: center;
             margin-bottom: 1.5rem; position: relative;
             font-size: 1.3rem;
+            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
         }
         .skill-card-icon::after {
             content: ''; position: absolute; inset: -1px;
-            border-radius: 15px; border: 1px solid rgba(124,106,255,0.15);
+            border-radius: 15px; border: 1px solid color-mix(in srgb, var(--sc) 25%, transparent);
         }
+        .skill-card-icon svg { stroke: var(--sc); }
+        .skill-card:hover .skill-card-icon { transform: translateY(-3px) scale(1.05); }
         .skill-card h3 {
             font-family: 'Sora', sans-serif;
             font-size: 1.05rem; font-weight: 700; margin-bottom: 1rem;
         }
         .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
         .skill-tag {
-            padding: 0.35rem 0.75rem; background: rgba(124,106,255,0.06);
-            border: 1px solid rgba(124,106,255,0.1); border-radius: 8px;
+            padding: 0.35rem 0.75rem;
+            background: color-mix(in srgb, var(--sc) 6%, transparent);
+            border: 1px solid color-mix(in srgb, var(--sc) 14%, transparent);
+            border-radius: 8px;
             font-size: 0.75rem; font-weight: 500; color: var(--text-2);
             transition: all 0.3s; font-family: 'JetBrains Mono', monospace;
         }
         .skill-tag:hover {
-            background: rgba(124,106,255,0.12);
-            color: var(--accent-2); border-color: rgba(124,106,255,0.25);
+            background: color-mix(in srgb, var(--sc) 14%, transparent);
+            color: var(--sc); border-color: color-mix(in srgb, var(--sc) 30%, transparent);
+            transform: translateY(-1px);
         }
+        .skill-card--ai { --sc: #34d399; }
+        .skill-card--data { --sc: #8b7cff; }
+        .skill-card--soft { --sc: #f59e0b; }
+        .skill-card--crm { --sc: #38bdf8; }
+        .skill-card--infra { --sc: #06b6d4; }
+        .skill-card--gov { --sc: #f97316; }
+        .skill-card--sec { --sc: #ef4444; }
+        .skill-card--cloud { --sc: #a78bfa; }
 
-        /* ===== EXPERIENCE â€” TIMELINE ===== */
+        /* ===== EXPERIENCE — TIMELINE ===== */
         .timeline { position: relative; padding-left: 3.5rem; }
         .timeline::before {
             content: ''; position: absolute; left: 0; top: 0; bottom: 0;
@@ -606,8 +644,51 @@
         .timeline-item:hover .timeline-list li::before { opacity: 1; }
 
         /* ===== EDUCATION ===== */
-        .edu-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
+        .edu-band {
+            display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.25rem;
+            margin-bottom: 3rem;
+        }
+        .edu-pills {
+            display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem;
+        }
+        .edu-pill {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            font-size: 0.75rem; font-weight: 600; color: var(--text-2);
+            background: rgba(124,106,255,0.08); border: 1px solid var(--border);
+            padding: 0.35rem 0.7rem; border-radius: 999px;
+        }
+        .edu-pill svg { width: 12px; height: 12px; color: var(--green); }
+        .edu-facts { display: flex; flex-direction: column; }
+        .edu-facts-label {
+            font-family: 'Sora', sans-serif; font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--accent-2); margin-bottom: 1rem;
+        }
+        .edu-facts-list { list-style: none; margin-top: auto; }
+        .edu-facts-list li {
+            display: flex; align-items: center; gap: 0.65rem;
+            color: var(--text-2); font-size: 0.9rem;
+            padding: 0.6rem 0; border-bottom: 1px solid var(--border);
+        }
+        .edu-facts-list li:first-child { padding-top: 0; }
+        .edu-facts-list li:last-child { border-bottom: none; padding-bottom: 0; }
+        .edu-check {
+            width: 18px; height: 18px; border-radius: 50%;
+            background: rgba(52,211,153,0.12); color: var(--green);
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .edu-check svg { width: 10px; height: 10px; }
+        .edu-heading {
+            display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;
+        }
+        .edu-heading p {
+            font-family: 'Sora', sans-serif; font-size: 0.78rem; font-weight: 700;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--text-2); white-space: nowrap;
+        }
+        .edu-heading-line {
+            height: 1px; flex: 1;
+            background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
         }
         .edu-card {
             background: var(--bg-2); border: 1px solid var(--border);
@@ -639,54 +720,111 @@
         }
         .edu-school { color: var(--accent); font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
         .edu-date { color: var(--text-3); font-size: 0.82rem; margin-bottom: 1.25rem; }
-        .cert-list { list-style: none; }
-        .cert-list li {
-            display: flex; align-items: center; gap: 0.6rem;
-            padding: 0.55rem 0; color: var(--text-2);
-            font-size: 0.88rem; border-bottom: 1px solid var(--border);
-        }
-        .cert-list li:last-child { border: none; }
-        .cert-check {
-            width: 18px; height: 18px; background: rgba(52,211,153,0.1);
-            border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; flex-shrink: 0;
-        }
-        .cert-check svg { width: 10px; height: 10px; color: var(--green); }
 
         /* ===== CONTACT ===== */
-        .contact-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.25rem;
+        .contact-main {
+            display: grid; grid-template-columns: 1.05fr 1.15fr; gap: 1.25rem;
+            align-items: stretch;
+        }
+        .contact-cta {
+            display: flex; flex-direction: column; justify-content: center; gap: 1.1rem;
+            padding: 2.75rem; border-radius: var(--radius);
+            border: 1px solid var(--border); position: relative; overflow: hidden;
+            background:
+                radial-gradient(700px circle at 90% -10%, var(--accent-glow-2) 0%, transparent 60%),
+                linear-gradient(160deg, rgba(124,106,255,0.07) 0%, transparent 55%),
+                var(--bg-2);
+        }
+        .contact-cta::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--green));
+        }
+        .contact-cta-eyebrow {
+            font-family: 'Sora', sans-serif; font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-2);
+        }
+        .contact-cta h3 {
+            font-family: 'Sora', sans-serif; font-size: 2rem;
+            line-height: 1.15; font-weight: 700;
+        }
+        .contact-cta p { color: var(--text-2); font-size: 0.95rem; line-height: 1.65; max-width: 40ch; }
+        .availability {
+            display: inline-flex; align-items: center; gap: 0.55rem; align-self: flex-start;
+            font-size: 0.8rem; font-weight: 600; color: var(--green);
+            background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2);
+            padding: 0.4rem 0.85rem; border-radius: 999px;
+        }
+        .pulse-dot {
+            width: 8px; height: 8px; border-radius: 50%; background: var(--green);
+            animation: pulseDot 2s ease-out infinite;
+        }
+        @keyframes pulseDot {
+            0% { box-shadow: 0 0 0 0 rgba(52,211,153,0.5); }
+            70% { box-shadow: 0 0 0 9px rgba(52,211,153,0); }
+            100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+        }
+        .cta-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+        .contact-tiles {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
+            align-content: center;
         }
         .contact-card {
-            display: flex; align-items: center; gap: 1.25rem;
-            padding: 1.75rem; background: var(--bg-2);
-            border: 1px solid var(--border); border-radius: var(--radius);
+            display: flex; align-items: center; gap: 1.1rem;
+            padding: 1.6rem; background: var(--bg-2);
+            border: 1px solid var(--border); border-radius: 16px;
             text-decoration: none; color: var(--text);
             transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
             position: relative; overflow: hidden;
         }
-        .contact-card::before {
-            content: ''; position: absolute; inset: 0;
-            background: radial-gradient(circle at 0% 0%, var(--accent-glow) 0%, transparent 60%);
-            opacity: 0; transition: opacity 0.4s;
+        .contact-card--wide { grid-column: 1 / -1; }
+        .contact-card::after {
+            content: ''; position: absolute; top: 0; left: -80%;
+            width: 50%; height: 100%;
+            background: linear-gradient(105deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: skewX(-20deg); transition: left 0.6s ease; pointer-events: none;
         }
-        .contact-card:hover::before { opacity: 1; }
+        .contact-card:hover::after { left: 120%; }
         .contact-card:hover {
-            border-color: var(--border-hover);
+            border-color: color-mix(in srgb, var(--cc,#7c6aff) 45%, transparent);
             transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+            box-shadow: 0 12px 40px color-mix(in srgb, var(--cc,#7c6aff) 15%, transparent);
         }
         .contact-icon-wrap {
-            width: 52px; height: 52px; background: var(--accent-glow);
+            width: 52px; height: 52px; min-width: 52px;
+            background: color-mix(in srgb, var(--cc,#7c6aff) 12%, transparent);
+            color: var(--cc,#7c6aff);
             border-radius: 14px; display: flex;
             align-items: center; justify-content: center;
             flex-shrink: 0; position: relative; z-index: 1;
+            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
         }
-        .contact-icon-wrap svg { width: 22px; height: 22px; color: var(--accent); }
-        .contact-text { position: relative; z-index: 1; }
+        .contact-card:hover .contact-icon-wrap { transform: scale(1.08); }
+        .contact-icon-wrap svg { width: 22px; height: 22px; }
+        .contact-text { position: relative; z-index: 1; min-width: 0; }
         .contact-text h4 { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.15rem; }
-        .contact-text p { font-size: 0.82rem; color: var(--text-3); }
+        .contact-text p {
+            font-size: 0.82rem; color: var(--text-3); white-space: nowrap;
+            overflow: hidden; text-overflow: ellipsis;
+        }
+        .contact-arrow {
+            margin-left: auto; color: var(--text-3); opacity: 0; transform: translateX(-6px);
+            transition: all 0.3s ease; position: relative; z-index: 1; flex-shrink: 0;
+        }
+        .contact-card:hover .contact-arrow { opacity: 1; transform: translateX(0); color: var(--cc,#7c6aff); }
+        .contact-arrow svg { width: 16px; height: 16px; }
+        .contact-chip {
+            margin-left: auto; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
+            color: var(--cc,#a78bfa);
+            background: color-mix(in srgb, var(--cc,#a78bfa) 12%, transparent);
+            border: 1px solid color-mix(in srgb, var(--cc,#a78bfa) 25%, transparent);
+            padding: 0.25rem 0.6rem; border-radius: 999px;
+            position: relative; z-index: 1; flex-shrink: 0;
+        }
+        .tile-email { --cc: #34d399; }
+        .tile-phone { --cc: #7c6aff; }
+        .tile-linkedin { --cc: #0a66c2; }
+        .tile-github { --cc: #c9d1d9; }
+        .tile-location { --cc: #a78bfa; }
 
         /* ===== FOOTER ===== */
         footer {
@@ -1031,27 +1169,84 @@
         .testimonial-avatar img {
             width: 100%; height: 100%; object-fit: cover;
         }
+        .testimonial-avatar.green {
+            background: color-mix(in srgb, var(--green) 12%, transparent);
+            color: var(--green); border-color: color-mix(in srgb, var(--green) 22%, transparent);
+        }
+        .testimonial-avatar.blue {
+            background: color-mix(in srgb, #38bdf8 12%, transparent);
+            color: #38bdf8; border-color: color-mix(in srgb, #38bdf8 22%, transparent);
+        }
+        .testimonial-avatar span { letter-spacing: 0.02em; }
         .testimonial-name { font-size: 0.88rem; font-weight: 600; }
         .testimonial-role { font-size: 0.75rem; color: var(--text-3); }
 
-        /* ===== SKILL BARS ===== */
+        /* ===== SKILL METERS ===== */
+        .skill-meters-head {
+            display: flex; align-items: center; gap: 1rem;
+            margin-top: 3.5rem; margin-bottom: 1.5rem;
+        }
+        .skill-meters-head p {
+            font-family: 'Sora', sans-serif; font-size: 0.78rem; font-weight: 700;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--text-2); white-space: nowrap;
+        }
+        .skill-meters-head .skill-meter-line {
+            height: 1px; flex: 1;
+            background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
+        }
         .skill-bars-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 3rem;
-            margin-top: 3rem;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
         }
-        .skill-bar-item { }
+        .skill-bar-item {
+            padding: 1.15rem 1.35rem; background: var(--bg-2);
+            border: 1px solid var(--border); border-radius: 14px;
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .skill-bar-item:hover {
+            border-color: color-mix(in srgb, var(--bar-color,#7c6aff) 45%, transparent);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 34px color-mix(in srgb, var(--bar-color,#7c6aff) 15%, transparent);
+        }
         .skill-bar-head {
-            display: flex; justify-content: space-between; margin-bottom: 0.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 0.6rem;
         }
-        .skill-bar-name { font-size: 0.85rem; font-weight: 600; }
-        .skill-bar-pct { font-size: 0.75rem; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
+        .skill-bar-name {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-size: 0.85rem; font-weight: 600;
+        }
+        .skill-bar-name svg { width: 15px; height: 15px; color: var(--bar-color,#7c6aff); flex-shrink: 0; }
+        .skill-bar-pct {
+            font-size: 0.72rem; font-family: 'JetBrains Mono', monospace;
+            color: var(--bar-color,#7c6aff);
+            background: color-mix(in srgb, var(--bar-color,#7c6aff) 10%, transparent);
+            border: 1px solid color-mix(in srgb, var(--bar-color,#7c6aff) 18%, transparent);
+            padding: 0.15rem 0.45rem; border-radius: 6px;
+        }
         .skill-bar-track {
-            height: 4px; background: var(--bg-3); border-radius: 4px; overflow: hidden;
+            height: 6px; background: var(--bg-3); border-radius: 6px; overflow: hidden;
         }
         .skill-bar-fill {
-            height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2));
-            border-radius: 4px; width: 0%; transition: width 1.5s cubic-bezier(0.16,1,0.3,1);
+            height: 100%;
+            background: linear-gradient(90deg, var(--bar-color,#7c6aff), var(--bar-color-2,#a78bfa));
+            background-size: 200% 100%;
+            border-radius: 6px; width: 0%;
+            transition: width 1.5s cubic-bezier(0.16,1,0.3,1);
+            animation: barGradient 4s ease-in-out infinite;
         }
+        @keyframes barGradient {
+            0%, 100% { background-position: 0% 0; }
+            50% { background-position: 100% 0; }
+        }
+        .c1 { --bar-color: #34d399; --bar-color-2: #7c6aff; }
+        .c2 { --bar-color: #7c6aff; --bar-color-2: #a78bfa; }
+        .c3 { --bar-color: #22d3ee; --bar-color-2: #0ea5e9; }
+        .c4 { --bar-color: #3b82f6; --bar-color-2: #8b5cf6; }
+        .c5 { --bar-color: #3776ab; --bar-color-2: #34d399; }
+        .c6 { --bar-color: #a78bfa; --bar-color-2: #7c6aff; }
+        .c7 { --bar-color: #ef4444; --bar-color-2: #7c6aff; }
+        .c8 { --bar-color: #f59e0b; --bar-color-2: #f97316; }
 
         /* ===== BACK TO TOP ===== */
         .back-to-top {
@@ -1303,18 +1498,28 @@
             background: var(--card); border: 1px solid var(--border);
             border-radius: 16px; padding: 1.25rem;
             transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+            position: relative; overflow: hidden;
+        }
+        .cert-badge-card::after {
+            content: ''; position: absolute; top: 0; left: -80%;
+            width: 50%; height: 100%;
+            background: linear-gradient(105deg, transparent, rgba(255,255,255,0.06), transparent);
+            transform: skewX(-20deg); transition: left 0.6s ease; pointer-events: none;
         }
         .cert-badge-card:hover {
             transform: translateY(-4px);
             border-color: var(--accent);
             box-shadow: 0 8px 30px rgba(124,106,255,0.12);
         }
+        .cert-badge-card:hover::after { left: 120%; }
+        .cert-badge-card:hover .cert-badge-icon { transform: translateY(-2px) scale(1.06); }
         .cert-badge-icon {
             width: 60px; height: 60px; min-width: 60px;
             border-radius: 14px;
             background: color-mix(in srgb, var(--badge-color) 12%, transparent);
             display: flex; align-items: center; justify-content: center;
             color: var(--badge-color);
+            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
         }
         .cert-badge-info h4 {
             font-size: 0.9rem; font-weight: 600; color: var(--text);
@@ -1333,6 +1538,7 @@
         @media (max-width: 1024px) {
             .skills-showcase { grid-template-columns: repeat(2, 1fr); }
             .certs-grid { grid-template-columns: repeat(2, 1fr); }
+            .contact-main { grid-template-columns: 1fr; }
         }
         @media (max-width: 768px) {
             body { cursor: auto; }
@@ -1352,7 +1558,7 @@
             .bento-card.bento-photo { grid-row: auto; }
             .about-photo-wrap { min-height: 260px; }
             .skills-showcase { grid-template-columns: 1fr; }
-            .edu-grid { grid-template-columns: 1fr; }
+            .edu-band { grid-template-columns: 1fr; }
             .timeline { padding-left: 2rem; }
             .timeline-item::before { left: -2rem; }
             .timeline-head { flex-direction: column; }
@@ -1373,12 +1579,42 @@
             .hire-grid { grid-template-columns: 1fr; }
             .hero-blob { display: none; }
             .certs-grid { grid-template-columns: 1fr; }
+            .contact-tiles { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 2.4rem; }
             .hero-actions { flex-direction: column; }
             .btn { width: 100%; justify-content: center; }
             .stat-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ===== PRINT ===== */
+        @media print {
+            :root {
+                --bg: #ffffff; --bg-2: #ffffff; --bg-3: #f5f5f8;
+                --surface: #ffffff; --surface-2: #f0f0f5;
+                --border: rgba(0,0,0,0.12); --border-hover: rgba(0,0,0,0.2);
+                --text: #111827; --text-2: #374151; --text-3: #6b7280;
+                --accent: #5b4cd4; --accent-2: #7c6aff; --accent-glow: rgba(91,76,212,0.08);
+                --green: #047857;
+            }
+            body { background: #fff !important; }
+            #navbar, .loader, .cursor-dot, .cursor-ring, .hero-scroll-hint,
+            .hero-bg-orb, .hero-blob, .hero-grid, .hero-profile-status, .hero-badge,
+            .floating-icons, .marquee-section, .bg-gradient-anim, #particles,
+            .back-to-top, .terminal-window, .hero-socials { display: none !important; }
+            .bento-card, .timeline-item, .edu-card, .cert-badge-card, .contact-card,
+            .skill-card, .skill-bar-item, .hire-card, .testimonial-card, .project-card {
+                box-shadow: none !important; transform: none !important;
+                break-inside: avoid;
+            }
+            .bento-card::before, .project-card .project-overlay { display: none; }
+            .reveal, .stagger-reveal > * { opacity: 1 !important; transform: none !important; }
+            .timeline-progress { display: none; }
+            section { padding: 2rem 0 !important; }
+            a { color: var(--accent); }
+            .section-title, .timeline-role, .project-title, .edu-title, h1, h2, h3 { color: #111827; }
+            .hero { min-height: auto !important; padding: 3rem 0 !important; }
         }
     </style>
 </head>
@@ -1480,6 +1716,10 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                 View Experience
             </a>
+            <a href="cv.html" target="_blank" rel="noopener" class="btn btn-ghost">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download CV
+            </a>
         </div>
         <div class="hero-socials">
             <a href="https://github.com/dxve248" target="_blank" rel="noopener">
@@ -1548,7 +1788,7 @@
         <div class="section-header reveal">
             <p class="section-label">About</p>
             <h2 class="section-title">Turning complexity<br> into simplicity.</h2>
-            <p class="section-subtitle">A snapshot of who I am and what drives me.</p>
+            <p class="section-subtitle">IT Administrator &amp; AI Automation Specialist based in Dubai.</p>
             <div class="section-divider"></div>
         </div>
         <div class="bento">
@@ -1563,58 +1803,63 @@
             </div>
             <div class="bento-card bento-about reveal">
                 <p>
-                    I'm <strong>Christian Dave Sicat</strong>, an IT Administrator and Automation Specialist
-                    based in <strong>Dubai, UAE</strong>. With hands-on experience managing IT infrastructure,
-                    digital solutions, and AI-powered automated workflows, I help organizations operate
-                    at peak efficiency.
+                    I'm <strong>Christian Dave Sicat</strong>, an IT Administrator &amp; AI Automation Specialist
+                    based in <strong>Dubai, UAE</strong>. I run end-to-end IT operations, network infrastructure,
+                    and system automation for a <strong>15-user manufacturing facility</strong> — from
+                    FortiGate-secured networks and Tally Prime ERP to Google Workspace and CCTV systems.
                 </p>
                 <p>
-                    My journey began with a <strong>BSc (Hons) in Creative Computing</strong> from Bath Spa University,
-                    and evolved through a formative role as <strong>Project Coordinator at PwC Academy</strong>,
-                    where I honed my skills in data visualization, project delivery, and stakeholder management.
+                    My superpower is automation. I pair <strong>Python scripting</strong> with
+                    <strong>AI-assisted workflows</strong> across <strong>OpenAI/Claude, n8n, Make.com and Zapier</strong>
+                    to strip the repetition out of operations — cutting manual effort by <strong>40%</strong> and
+                    compressing a 24-hour quoting process into about <strong>2 hours</strong>.
                 </p>
                 <p>
-                    Today, I specialize in designing intelligent automation pipelines using platforms like
-                    <strong>Zapier, n8n, Make.com</strong>, and <strong>Power Automate</strong>, combined with
-                    <strong>LLM tools and agents</strong> to push the boundaries of what's possible.
+                    My foundation spans a <strong>BSc (Hons) in Creative Computing</strong> from Bath Spa University
+                    and a formative role as <strong>Project Coordinator at PwC Academy</strong>, where I sharpened
+                    my skills in data visualization, project delivery, and stakeholder management.
                 </p>
+                <div class="about-highlight">
+                    <span class="about-highlight-icon">&#x26A1;</span>
+                    <p><strong>40% of manual effort automated</strong> &nbsp;·&nbsp; <strong>12x faster quoting</strong> &nbsp;·&nbsp; <strong>zero missed deliveries</strong></p>
+                </div>
                 <div class="stat-grid">
                     <div class="stat-item">
-                        <div class="stat-num" data-count="4">0<span class="suffix">+</span></div>
-                        <div class="stat-label">Years Experience</div>
+                        <div class="stat-num" data-count="40">0<span class="suffix">%</span></div>
+                        <div class="stat-label">Manual Effort Reduced</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-num" data-count="200">0<span class="suffix">+</span></div>
-                        <div class="stat-label">Users Supported</div>
+                        <div class="stat-num" data-count="5">0<span class="suffix">x</span></div>
+                        <div class="stat-label">Faster Quoting</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-num" data-count="25">0<span class="suffix">+</span></div>
+                        <div class="stat-num" data-count="99">0<span class="suffix">%</span></div>
+                        <div class="stat-label">Network Uptime</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num" data-count="20">0<span class="suffix">%</span></div>
+                        <div class="stat-label">Telecom Cost Cut</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num" data-count="10">0<span class="suffix">+</span></div>
                         <div class="stat-label">Workflows Automated</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-num" data-count="99.9">0<span class="suffix">%</span></div>
-                        <div class="stat-label">Uptime Maintained</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-num" data-count="8">0<span class="suffix">+</span></div>
-                        <div class="stat-label">Platforms Mastered</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-num" data-count="0">0<span class="suffix"></span></div>
-                        <div class="stat-label">Security Incidents</div>
+                        <div class="stat-num" data-count="100">0<span class="suffix">%</span></div>
+                        <div class="stat-label">Gov Compliance</div>
                     </div>
                 </div>
             </div>
             <div class="bento-card bento-status reveal reveal-delay-1">
                 <h3>What I Do</h3>
                 <ul class="status-list">
-                    <li><span class="status-dot green"></span> IT Infrastructure & Network Admin</li>
-                    <li><span class="status-dot blue"></span> AI Workflow Automation</li>
-                    <li><span class="status-dot green"></span> Data Visualization (Power BI)</li>
-                    <li><span class="status-dot blue"></span> CRM & Account Management</li>
-                    <li><span class="status-dot yellow"></span> Project Coordination</li>
-                    <li><span class="status-dot green"></span> Email Security & Compliance</li>
-                    <li><span class="status-dot blue"></span> Server & Hardware Management</li>
+                    <li><span class="status-dot green"></span> AI Automation & Scripting</li>
+                    <li><span class="status-dot blue"></span> Network & FortiGate Security</li>
+                    <li><span class="status-dot green"></span> ERP Administration (Tally Prime)</li>
+                    <li><span class="status-dot blue"></span> CCTV & Surveillance Systems</li>
+                    <li><span class="status-dot yellow"></span> End-User IT Support</li>
+                    <li><span class="status-dot green"></span> Email Security & Hardening</li>
+                    <li><span class="status-dot blue"></span> Govt Compliance (DARB · MOIAT · FEWA)</li>
                 </ul>
             </div>
             <div class="bento-card bento-languages reveal reveal-delay-2">
@@ -1645,7 +1890,7 @@
             <div class="hire-card reveal">
                 <div class="hire-icon">&#x26A1;</div>
                 <h3>Automation-First Mindset</h3>
-                <p>I don't just solve problems once â€” I build systems that solve them permanently. From enquiry routing to stock reports, I automate the repeatable so teams focus on what matters.</p>
+                <p>I don't just solve problems once — I build systems that solve them permanently. From enquiry routing to stock reports, I automate the repeatable so teams focus on what matters.</p>
             </div>
             <div class="hire-card reveal reveal-delay-1">
                 <div class="hire-icon">&#x1F4CA;</div>
@@ -1655,17 +1900,17 @@
             <div class="hire-card reveal reveal-delay-2">
                 <div class="hire-icon">&#x1F916;</div>
                 <h3>AI Integration Pioneer</h3>
-                <p>I'm at the forefront of LLM adoption â€” building agents, automating with OpenAI/Claude/Grok, and deploying AI-powered workflows that traditional IT teams haven't explored yet.</p>
+                <p>I'm at the forefront of LLM adoption — building agents, automating with OpenAI/Claude/Grok, and deploying AI-powered workflows that traditional IT teams haven't explored yet.</p>
             </div>
             <div class="hire-card reveal reveal-delay-3">
                 <div class="hire-icon">&#x1F3D7;</div>
                 <h3>Full-Stack IT Ownership</h3>
-                <p>From cabling a server rack to configuring Zapier integrations to managing Etisalat accounts â€” I own the entire IT stack end-to-end, not just one slice of it.</p>
+                <p>From cabling a server rack to configuring Zapier integrations to managing Etisalat accounts — I own the entire IT stack end-to-end, not just one slice of it.</p>
             </div>
             <div class="hire-card reveal reveal-delay-1">
                 <div class="hire-icon">&#x1F4AC;</div>
                 <h3>Stakeholder Communication</h3>
-                <p>PwC taught me how to translate technical complexity into business language. I present, document, and report with clarity â€” bridging IT and leadership effortlessly.</p>
+                <p>PwC taught me how to translate technical complexity into business language. I present, document, and report with clarity — bridging IT and leadership effortlessly.</p>
             </div>
             <div class="hire-card reveal reveal-delay-2">
                 <div class="hire-icon">&#x1F680;</div>
@@ -1687,7 +1932,7 @@
             <div class="section-divider"></div>
         </div>
         <div class="skills-showcase">
-            <div class="skill-card reveal">
+            <div class="skill-card skill-card--ai reveal">
                 <div class="skill-card-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                 </div>
@@ -1702,8 +1947,9 @@
                     <span class="skill-tag">Grok</span>
                     <span class="skill-tag">LLM Agents</span>
                 </div>
+                <span class="skill-card-num">01</span>
             </div>
-            <div class="skill-card reveal reveal-delay-1">
+            <div class="skill-card skill-card--data reveal reveal-delay-1">
                 <div class="skill-card-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
                 </div>
@@ -1714,8 +1960,9 @@
                     <span class="skill-tag">Digital Forensics</span>
                     <span class="skill-tag">Web Dev</span>
                 </div>
+                <span class="skill-card-num">02</span>
             </div>
-            <div class="skill-card reveal reveal-delay-2">
+            <div class="skill-card skill-card--soft reveal reveal-delay-2">
                 <div class="skill-card-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
                 </div>
@@ -1726,8 +1973,9 @@
                     <span class="skill-tag">Tally ERP</span>
                     <span class="skill-tag">Fortinet</span>
                 </div>
+                <span class="skill-card-num">03</span>
             </div>
-            <div class="skill-card reveal reveal-delay-1">
+            <div class="skill-card skill-card--crm reveal reveal-delay-1">
                 <div class="skill-card-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 </div>
@@ -1737,8 +1985,9 @@
                     <span class="skill-tag">HubSpot</span>
                     <span class="skill-tag">Zoho</span>
                 </div>
+                <span class="skill-card-num">04</span>
             </div>
-            <div class="skill-card reveal reveal-delay-2">
+            <div class="skill-card skill-card--infra reveal reveal-delay-2">
                 <div class="skill-card-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                 </div>
@@ -1749,8 +1998,9 @@
                     <span class="skill-tag">Network Admin</span>
                     <span class="skill-tag">IT Procurement</span>
                 </div>
+                <span class="skill-card-num">05</span>
             </div>
-            <div class="skill-card reveal reveal-delay-3">
+            <div class="skill-card skill-card--gov reveal reveal-delay-3">
                 <div class="skill-card-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
@@ -1761,8 +2011,9 @@
                     <span class="skill-tag">MOAIT</span>
                     <span class="skill-tag">Compliance</span>
                 </div>
+                <span class="skill-card-num">06</span>
             </div>
-            <div class="skill-card reveal reveal-delay-4">
+            <div class="skill-card skill-card--sec reveal reveal-delay-4">
                 <div class="skill-card-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                 </div>
@@ -1773,8 +2024,9 @@
                     <span class="skill-tag">Fortinet</span>
                     <span class="skill-tag">Digital Forensics</span>
                 </div>
+                <span class="skill-card-num">07</span>
             </div>
-            <div class="skill-card reveal reveal-delay-5">
+            <div class="skill-card skill-card--cloud reveal reveal-delay-5">
                 <div class="skill-card-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                 </div>
@@ -1785,39 +2037,93 @@
                     <span class="skill-tag">SharePoint</span>
                     <span class="skill-tag">Teams Admin</span>
                 </div>
+                <span class="skill-card-num">08</span>
             </div>
         </div>
+        <div class="skill-meters-head reveal">
+            <span class="skill-meter-line"></span>
+            <p>Core Proficiencies</p>
+            <span class="skill-meter-line"></span>
+        </div>
         <div class="skill-bars-grid reveal stagger-reveal">
-            <div class="skill-bar-item">
-                <div class="skill-bar-head"><span class="skill-bar-name">AI Workflow Automation</span><span class="skill-bar-pct">95%</span></div>
+            <div class="skill-bar-item c1">
+                <div class="skill-bar-head">
+                    <span class="skill-bar-name">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        AI Workflow Automation
+                    </span>
+                    <span class="skill-bar-pct">95%</span>
+                </div>
                 <div class="skill-bar-track"><div class="skill-bar-fill" data-width="95"></div></div>
             </div>
-            <div class="skill-bar-item">
-                <div class="skill-bar-head"><span class="skill-bar-name">Power BI & Data Viz</span><span class="skill-bar-pct">90%</span></div>
+            <div class="skill-bar-item c2">
+                <div class="skill-bar-head">
+                    <span class="skill-bar-name">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+                        Power BI & Data Viz
+                    </span>
+                    <span class="skill-bar-pct">90%</span>
+                </div>
                 <div class="skill-bar-track"><div class="skill-bar-fill" data-width="90"></div></div>
             </div>
-            <div class="skill-bar-item">
-                <div class="skill-bar-head"><span class="skill-bar-name">IT Infrastructure</span><span class="skill-bar-pct">88%</span></div>
+            <div class="skill-bar-item c3">
+                <div class="skill-bar-head">
+                    <span class="skill-bar-name">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                        IT Infrastructure
+                    </span>
+                    <span class="skill-bar-pct">88%</span>
+                </div>
                 <div class="skill-bar-track"><div class="skill-bar-fill" data-width="88"></div></div>
             </div>
-            <div class="skill-bar-item">
-                <div class="skill-bar-head"><span class="skill-bar-name">CRM Platforms</span><span class="skill-bar-pct">85%</span></div>
+            <div class="skill-bar-item c4">
+                <div class="skill-bar-head">
+                    <span class="skill-bar-name">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        CRM Platforms
+                    </span>
+                    <span class="skill-bar-pct">85%</span>
+                </div>
                 <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div>
             </div>
-            <div class="skill-bar-item">
-                <div class="skill-bar-head"><span class="skill-bar-name">Python Programming</span><span class="skill-bar-pct">80%</span></div>
+            <div class="skill-bar-item c5">
+                <div class="skill-bar-head">
+                    <span class="skill-bar-name">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        Python Programming
+                    </span>
+                    <span class="skill-bar-pct">80%</span>
+                </div>
                 <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div>
             </div>
-            <div class="skill-bar-item">
-                <div class="skill-bar-head"><span class="skill-bar-name">Project Coordination</span><span class="skill-bar-pct">85%</span></div>
+            <div class="skill-bar-item c6">
+                <div class="skill-bar-head">
+                    <span class="skill-bar-name">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        Project Coordination
+                    </span>
+                    <span class="skill-bar-pct">85%</span>
+                </div>
                 <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div>
             </div>
-            <div class="skill-bar-item">
-                <div class="skill-bar-head"><span class="skill-bar-name">Network Security</span><span class="skill-bar-pct">82%</span></div>
+            <div class="skill-bar-item c7">
+                <div class="skill-bar-head">
+                    <span class="skill-bar-name">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        Network Security
+                    </span>
+                    <span class="skill-bar-pct">82%</span>
+                </div>
                 <div class="skill-bar-track"><div class="skill-bar-fill" data-width="82"></div></div>
             </div>
-            <div class="skill-bar-item">
-                <div class="skill-bar-head"><span class="skill-bar-name">Digital Marketing</span><span class="skill-bar-pct">75%</span></div>
+            <div class="skill-bar-item c8">
+                <div class="skill-bar-head">
+                    <span class="skill-bar-name">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                        Digital Marketing
+                    </span>
+                    <span class="skill-bar-pct">75%</span>
+                </div>
                 <div class="skill-bar-track"><div class="skill-bar-fill" data-width="75"></div></div>
             </div>
         </div>
@@ -1851,7 +2157,7 @@
         <div class="section-header reveal">
             <p class="section-label">Impact</p>
             <h2 class="section-title">Key Achievements<br> & Projects.</h2>
-            <p class="section-subtitle">Measurable results from real-world work.</p>
+            <p class="section-subtitle">Real-world achievements and hands-on open-source builds.</p>
             <div class="section-divider"></div>
         </div>
         <div class="projects-grid">
@@ -1927,7 +2233,7 @@
                 </div>
                 <div class="project-body">
                     <h3>IT Infrastructure Overhaul</h3>
-                    <p>Upgraded servers, optimized network architecture, and maintained 100% uptime for the Tally ERP system across the organization â€” zero downtime during migration.</p>
+                    <p>Upgraded servers, optimized network architecture, and maintained 100% uptime for the Tally ERP system across the organization — zero downtime during migration.</p>
                     <div class="project-tags">
                         <span class="project-tag">Network</span>
                         <span class="project-tag">Tally ERP</span>
@@ -1967,7 +2273,7 @@
                 </div>
                 <div class="project-body">
                     <h3>Google Workspace & Microsoft 365 Migration</h3>
-                    <p>Led a seamless migration of 200+ users from Google Workspace to Microsoft 365, including email, OneDrive, SharePoint, and Teams â€” completed with zero data loss.</p>
+                    <p>Led a seamless migration of 200+ users from Google Workspace to Microsoft 365, including email, OneDrive, SharePoint, and Teams — completed with zero data loss.</p>
                     <div class="project-tags">
                         <span class="project-tag">MS365</span>
                         <span class="project-tag">Migration</span>
@@ -1987,7 +2293,7 @@
                 </div>
                 <div class="project-body">
                     <h3>Quotation Generator Automation</h3>
-                    <p>Engineered an automated quotation generation system that pulls product data, applies pricing rules, and sends branded PDF quotations â€” cutting turnaround time by 3x.</p>
+                    <p>Engineered an automated quotation generation system that pulls product data, applies pricing rules, and sends branded PDF quotations — cutting turnaround time by 3x.</p>
                     <div class="project-tags">
                         <span class="project-tag">n8n</span>
                         <span class="project-tag">PDF Gen</span>
@@ -2044,33 +2350,6 @@
             </div>
             <div class="project-card reveal reveal-delay-1">
                 <div class="project-visual">
-                    <img src="https://images.unsplash.com/photo-1507146426996-ef05306b995a?w=600&h=340&fit=crop" alt="Real-Time Object Detection" loading="lazy">
-                    <div class="project-overlay">
-                        <div class="project-metric">
-                            <div class="project-metric-num">YOLOv8</div>
-                            <div class="project-metric-label">Model</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-body">
-                    <h3>Real-Time Object Detection</h3>
-                    <p>End-to-end YOLOv8 computer vision pipeline — training with MLflow tracking, FastAPI REST API, WebSocket real-time streaming, A/B testing, drift detection, GPU optimization, Docker, and GitHub Actions CI/CD.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">YOLOv8</span>
-                        <span class="project-tag">PyTorch</span>
-                        <span class="project-tag">FastAPI</span>
-                        <span class="project-tag">Docker</span>
-                    </div>
-                    <div style="margin-top:1.25rem;">
-                        <a href="https://github.com/dxve248/Object-Detection" target="_blank" rel="noopener" class="github-link">
-                            View on GitHub
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="project-card reveal reveal-delay-2">
-                <div class="project-visual">
                     <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=340&fit=crop" alt="Mini-SIEM" loading="lazy">
                     <div class="project-overlay">
                         <div class="project-metric">
@@ -2096,7 +2375,61 @@
                     </div>
                 </div>
             </div>
+            <div class="project-card reveal reveal-delay-2">
+                <div class="project-visual">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=340&fit=crop" alt="PyVault Password Manager" loading="lazy">
+                    <div class="project-overlay">
+                        <div class="project-metric">
+                            <div class="project-metric-num">AES-256</div>
+                            <div class="project-metric-label">Zero-Knowledge</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3>PyVault — Zero-Knowledge Password Manager</h3>
+                    <p>Self-hosted password manager built with FastAPI — master passwords and secrets never reach the server; all encryption runs in the browser via WebCrypto + Argon2id, with TOTP 2FA, rate limiting, encrypted backups, and 33 automated tests.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">FastAPI</span>
+                        <span class="project-tag">WebCrypto</span>
+                        <span class="project-tag">Argon2id</span>
+                        <span class="project-tag">TOTP</span>
+                    </div>
+                    <div style="margin-top:1.25rem;">
+                        <a href="https://github.com/dxve248/pw-manager" target="_blank" rel="noopener" class="github-link">
+                            View on GitHub
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
             <div class="project-card reveal reveal-delay-3">
+                <div class="project-visual">
+                    <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=600&h=340&fit=crop" alt="Windows Debloater" loading="lazy">
+                    <div class="project-overlay">
+                        <div class="project-metric">
+                            <div class="project-metric-num">1-Click</div>
+                            <div class="project-metric-label">Safe Debloat</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3>Windows Debloater</h3>
+                    <p>Single-file Windows 11 optimization tool in C#/WPF — scans, previews, and applies a safe plan with an automatic restore point and undo manifest; a hardcoded blocklist protects critical OS components, with a dotnet-tested safety model.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">C#</span>
+                        <span class="project-tag">WPF</span>
+                        <span class="project-tag">.NET</span>
+                        <span class="project-tag">SysAdmin</span>
+                    </div>
+                    <div style="margin-top:1.25rem;">
+                        <a href="https://github.com/dxve248/windows-debloaterz" target="_blank" rel="noopener" class="github-link">
+                            View on GitHub
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card reveal">
                 <div class="project-visual">
                     <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=340&fit=crop" alt="Secure Task Manager" loading="lazy">
                     <div class="project-overlay">
@@ -2123,54 +2456,27 @@
                     </div>
                 </div>
             </div>
-            <div class="project-card reveal">
-                <div class="project-visual">
-                    <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=600&h=340&fit=crop" alt="Voice-to-Notes" loading="lazy">
-                    <div class="project-overlay">
-                        <div class="project-metric">
-                            <div class="project-metric-num">100%</div>
-                            <div class="project-metric-label">Local & Private</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-body">
-                    <h3>Voice-to-Notes</h3>
-                    <p>Local-first transcription pipeline — watches a folder for voice memos, transcribes them with faster-whisper, extracts action items with Ollama, and appends checkbox bullets to daily markdown notes. Nothing leaves your machine.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">Whisper</span>
-                        <span class="project-tag">Ollama</span>
-                        <span class="project-tag">Automation</span>
-                        <span class="project-tag">Markdown</span>
-                    </div>
-                    <div style="margin-top:1.25rem;">
-                        <a href="https://github.com/dxve248/Voice-to-Notes" target="_blank" rel="noopener" class="github-link">
-                            View on GitHub
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
             <div class="project-card reveal reveal-delay-1">
                 <div class="project-visual">
-                    <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&h=340&fit=crop" alt="Midnight Marquee" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1507146426996-ef05306b995a?w=600&h=340&fit=crop" alt="Real-Time Object Detection" loading="lazy">
                     <div class="project-overlay">
                         <div class="project-metric">
-                            <div class="project-metric-num">50+</div>
-                            <div class="project-metric-label">Films & Series</div>
+                            <div class="project-metric-num">YOLOv8</div>
+                            <div class="project-metric-label">Model</div>
                         </div>
                     </div>
                 </div>
                 <div class="project-body">
-                    <h3>Midnight Marquee</h3>
-                    <p>Netflix-style streaming catalog built with React — 50+ curated films and series with full metadata, full-text search, "My List" favorites, embedded YouTube player, page transitions, and a polished responsive dark UI.</p>
+                    <h3>Real-Time Object Detection</h3>
+                    <p>End-to-end YOLOv8 computer vision pipeline — training with MLflow tracking, FastAPI REST API, WebSocket real-time streaming, A/B testing, drift detection, GPU optimization, Docker, and GitHub Actions CI/CD.</p>
                     <div class="project-tags">
-                        <span class="project-tag">React</span>
-                        <span class="project-tag">React Router</span>
-                        <span class="project-tag">Vite</span>
-                        <span class="project-tag">Context API</span>
+                        <span class="project-tag">YOLOv8</span>
+                        <span class="project-tag">PyTorch</span>
+                        <span class="project-tag">FastAPI</span>
+                        <span class="project-tag">Docker</span>
                     </div>
                     <div style="margin-top:1.25rem;">
-                        <a href="https://github.com/dxve248/stream-vault" target="_blank" rel="noopener" class="github-link">
+                        <a href="https://github.com/dxve248/Object-Detection" target="_blank" rel="noopener" class="github-link">
                             View on GitHub
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
                         </a>
@@ -2242,7 +2548,7 @@
     </div>
 </section>
 
-<!-- Education -->
+<!-- Education & Certifications -->
 <section id="education">
     <div class="section-num">04</div>
     <div class="section-inner">
@@ -2252,7 +2558,7 @@
             <p class="section-subtitle">My academic foundation and professional certifications.</p>
             <div class="section-divider"></div>
         </div>
-        <div class="edu-grid">
+        <div class="edu-band">
             <div class="edu-card reveal">
                 <div class="edu-icon">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 6 3 12 0v-5"/></svg>
@@ -2260,51 +2566,43 @@
                 <h3>BSc (Hons) in Creative Computing</h3>
                 <p class="edu-school">Bath Spa University RAK, UAE</p>
                 <p class="edu-date">Graduated: 2025</p>
-            </div>
-            <div class="edu-card reveal reveal-delay-1">
-                <div class="edu-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 15l-2 5 2-1 2 1-2-5z"/><circle cx="12" cy="9" r="6"/><path d="M9 9l2 2 4-4"/></svg>
+                <div class="edu-pills">
+                    <span class="edu-pill">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        First Class Honours
+                    </span>
+                    <span class="edu-pill">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                        Accredited Degree
+                    </span>
                 </div>
-                <h3>Certifications & Achievements</h3>
-                <ul class="cert-list">
+            </div>
+            <div class="edu-card edu-facts reveal reveal-delay-1">
+                <p class="edu-facts-label">Specialisations</p>
+                <ul class="edu-facts-list">
                     <li>
-                        <span class="cert-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
-                        Python Fundamentals Certification
+                        <span class="edu-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+                        Software Engineering
                     </li>
                     <li>
-                        <span class="cert-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
-                        Digital Forensics Investigation Project
+                        <span class="edu-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+                        Web Development
                     </li>
                     <li>
-                        <span class="cert-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
-                        Fortinet NSE 1 & NSE 2 Certification
+                        <span class="edu-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+                        Security &amp; Forensics
                     </li>
                     <li>
-                        <span class="cert-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
-                        Microsoft 365 Certified: Fundamentals
-                    </li>
-                    <li>
-                        <span class="cert-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
-                        Google IT Support Professional Certificate
-                    </li>
-                    <li>
-                        <span class="cert-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
-                        Academic Excellence Award â€” First Class Honours
+                        <span class="edu-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+                        Data &amp; Analytics
                     </li>
                 </ul>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- Certifications Showcase -->
-<section id="certifications" class="spotlight-section">
-    <div class="section-inner">
-        <div class="section-header reveal">
-            <p class="section-label">Credentials</p>
-            <h2 class="section-title">Certifications<br> & Badges.</h2>
-            <p class="section-subtitle">Verified credentials that validate my expertise.</p>
-            <div class="section-divider"></div>
+        <div class="edu-heading reveal">
+            <span class="edu-heading-line"></span>
+            <p>Professional Certifications &amp; Badges</p>
+            <span class="edu-heading-line"></span>
         </div>
         <div class="certs-grid">
             <div class="cert-badge-card reveal">
@@ -2385,7 +2683,7 @@
                 <div class="testimonial-quote">"</div>
                 <p class="testimonial-text">Christian brought a level of technical competence and initiative that exceeded expectations. His Power BI dashboard became an essential tool for our leadership team, and his ability to manage multiple stakeholders simultaneously was impressive.</p>
                 <div class="testimonial-author">
-                    <div class="testimonial-avatar"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=80&h=80&fit=crop&crop=face" alt="PwC"></div>
+                    <div class="testimonial-avatar blue"><span>PwC</span></div>
                     <div>
                         <div class="testimonial-name">PwC Academy Team</div>
                         <div class="testimonial-role">Project Coordination Colleagues</div>
@@ -2394,9 +2692,9 @@
             </div>
             <div class="testimonial-card reveal reveal-delay-1">
                 <div class="testimonial-quote">"</div>
-                <p class="testimonial-text">What sets Christian apart is his ability to see the bigger picture. He doesn't just fix the immediate problem â€” he builds systems that prevent the problem from happening again. His automation work saved our team countless hours every week.</p>
+                <p class="testimonial-text">What sets Christian apart is his ability to see the bigger picture. He doesn't just fix the immediate problem — he builds systems that prevent the problem from happening again. His automation work saved our team countless hours every week.</p>
                 <div class="testimonial-author">
-                    <div class="testimonial-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Stakeholders"></div>
+                    <div class="testimonial-avatar green"><span>WS</span></div>
                     <div>
                         <div class="testimonial-name">Internal Stakeholders</div>
                         <div class="testimonial-role">Winning Star Labels & Tapes</div>
@@ -2407,7 +2705,7 @@
                 <div class="testimonial-quote">"</div>
                 <p class="testimonial-text">Christian is the kind of IT professional who actually understands business needs. He communicates in plain language, delivers on time, and consistently goes above and beyond what's expected. A true asset to any team.</p>
                 <div class="testimonial-author">
-                    <div class="testimonial-avatar"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=80&h=80&fit=crop&crop=face" alt="Faculty"></div>
+                    <div class="testimonial-avatar"><span>BU</span></div>
                     <div>
                         <div class="testimonial-name">University Faculty</div>
                         <div class="testimonial-role">Bath Spa University RAK</div>
@@ -2428,50 +2726,80 @@
             <p class="section-subtitle">Open to new opportunities and collaborations.</p>
             <div class="section-divider"></div>
         </div>
-        <div class="contact-grid">
-            <a href="mailto:cdavesicat22@gmail.com" class="contact-card reveal">
-                <div class="contact-icon-wrap">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <div class="contact-main">
+            <div class="contact-cta reveal">
+                <p class="contact-cta-eyebrow">Let's Talk</p>
+                <h3>Have a project<br>in mind?</h3>
+                <p>Open to full-time roles, freelance projects, and security or automation collaborations across the GCC.</p>
+                <div class="availability">
+                    <span class="pulse-dot"></span>
+                    Available for new opportunities
                 </div>
-                <div class="contact-text">
-                    <h4>Email</h4>
-                    <p>cdavesicat22@gmail.com</p>
+                <div class="cta-actions">
+                    <a href="mailto:cdavesicat22@gmail.com" class="btn btn-primary">
+                        Send me an email
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                    </a>
+                    <a href="https://github.com/dxve248" target="_blank" rel="noopener" class="btn btn-ghost">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                        View my work
+                    </a>
+                    <a href="cv.html" target="_blank" rel="noopener" class="btn btn-ghost">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download CV
+                    </a>
                 </div>
-            </a>
-            <a href="tel:+971509204822" class="contact-card reveal reveal-delay-1">
-                <div class="contact-icon-wrap">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                </div>
-                <div class="contact-text">
-                    <h4>Phone</h4>
-                    <p>+971 509204822</p>
-                </div>
-            </a>
-            <a href="https://linkedin.com/in/christian-dave-sicat-129669265" target="_blank" rel="noopener" class="contact-card reveal reveal-delay-2">
-                <div class="contact-icon-wrap">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                </div>
-                <div class="contact-text">
-                    <h4>LinkedIn</h4>
-                    <p>Christian Dave Sicat</p>
-                </div>
-            </a>
-            <a href="https://github.com/dxve248" target="_blank" rel="noopener" class="contact-card reveal reveal-delay-3">
-                <div class="contact-icon-wrap">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-                </div>
-                <div class="contact-text">
-                    <h4>GitHub</h4>
-                    <p>@dxve248</p>
-                </div>
-            </a>
-            <div class="contact-card reveal reveal-delay-4">
-                <div class="contact-icon-wrap">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                </div>
-                <div class="contact-text">
-                    <h4>Location</h4>
-                    <p>Dubai, UAE</p>
+            </div>
+            <div class="contact-tiles">
+                <a href="mailto:cdavesicat22@gmail.com" class="contact-card tile-email reveal reveal-delay-1">
+                    <div class="contact-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <div class="contact-text">
+                        <h4>Email</h4>
+                        <p>cdavesicat22@gmail.com</p>
+                    </div>
+                    <span class="contact-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+                </a>
+                <a href="tel:+971509204822" class="contact-card tile-phone reveal reveal-delay-2">
+                    <div class="contact-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <div class="contact-text">
+                        <h4>Phone</h4>
+                        <p>+971 509204822</p>
+                    </div>
+                    <span class="contact-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+                </a>
+                <a href="https://linkedin.com/in/christian-dave-sicat-129669265" target="_blank" rel="noopener" class="contact-card tile-linkedin reveal reveal-delay-3">
+                    <div class="contact-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                    </div>
+                    <div class="contact-text">
+                        <h4>LinkedIn</h4>
+                        <p>Christian Dave Sicat</p>
+                    </div>
+                    <span class="contact-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+                </a>
+                <a href="https://github.com/dxve248" target="_blank" rel="noopener" class="contact-card tile-github reveal reveal-delay-4">
+                    <div class="contact-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                    </div>
+                    <div class="contact-text">
+                        <h4>GitHub</h4>
+                        <p>@dxve248</p>
+                    </div>
+                    <span class="contact-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+                </a>
+                <div class="contact-card contact-card--wide tile-location reveal reveal-delay-2">
+                    <div class="contact-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div class="contact-text">
+                        <h4>Location</h4>
+                        <p>Dubai, United Arab Emirates</p>
+                    </div>
+                    <span class="contact-chip">GMT+4</span>
                 </div>
             </div>
         </div>
@@ -2787,7 +3115,7 @@
     if (terminalBody) {
         const terminalLines = [
             { type: 'cmd', prompt: '~', text: 'whoami' },
-            { type: 'output', text: 'Christian Dave Sicat â€” IT Admin & Automation Specialist' },
+            { type: 'output', text: 'Christian Dave Sicat — IT Admin & Automation Specialist' },
             { type: 'cmd', prompt: '~', text: 'cat skills.json | jq ".expertise"' },
             { type: 'output', text: '["AI Automation", "Power BI", "Network Admin", "CRM Platforms", "Python"]' },
             { type: 'cmd', prompt: '~', text: 'echo $CURRENT_ROLE' },
