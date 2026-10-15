@@ -6,6 +6,21 @@
     const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     const customCursor = finePointer && !prefersReduced;
 
+    let heroVisible = true;
+
+    function rAFPointer(el, fn) {
+        let queued = false, last = null;
+        el.addEventListener('mousemove', e => {
+            last = e;
+            if (queued) return;
+            queued = true;
+            requestAnimationFrame(() => {
+                queued = false;
+                fn(last);
+            });
+        }, { passive: true });
+    }
+
     // ===== LOADING SCREEN =====
     const loader = document.getElementById('loader');
     const loaderBar = document.getElementById('loaderBar');
@@ -116,7 +131,23 @@
         navLinksAll.forEach(link => {
             link.classList.toggle('active', link.getAttribute('href') === '#' + current);
         });
+        moveNavIndicator();
     }
+
+    const navIndicator = document.getElementById('navIndicator');
+    function moveNavIndicator() {
+        if (!navIndicator) return;
+        const activeLink = document.querySelector('.nav-links a.active');
+        if (!activeLink || window.innerWidth <= 768) {
+            navIndicator.style.opacity = '0';
+            return;
+        }
+        navIndicator.style.width = activeLink.offsetWidth + 'px';
+        navIndicator.style.transform = 'translateX(' + activeLink.offsetLeft + 'px)';
+        navIndicator.style.top = (activeLink.offsetTop + activeLink.offsetHeight + 6) + 'px';
+        navIndicator.style.opacity = '1';
+    }
+    window.addEventListener('resize', moveNavIndicator);
 
 
     // ===== HAMBURGER =====
@@ -181,18 +212,18 @@
         setTimeout(() => {
             document.querySelectorAll('.hero h1 .line span').forEach((span, i) => {
                 setTimeout(() => {
-                    span.style.transition = 'transform 1s cubic-bezier(0.16,1,0.3,1)';
+                    span.style.transition = 'transform var(--dur-4) var(--ease-out)';
                     span.style.transform = 'translateY(0)';
                 }, 300 + i * 150);
             });
-            document.querySelector('.hero-overline').style.transition = 'opacity 0.8s, transform 0.8s';
+            document.querySelector('.hero-overline').style.transition = 'opacity var(--dur-4), transform var(--dur-4)';
             document.querySelector('.hero-overline').style.opacity = '1';
             document.querySelector('.hero-overline').style.transform = 'translateY(0)';
 
             ['.hero-desc', '.hero-actions', '.hero-socials'].forEach((sel, i) => {
                 setTimeout(() => {
                     const el = document.querySelector(sel);
-                    el.style.transition = 'opacity 0.8s, transform 0.8s';
+                    el.style.transition = 'opacity var(--dur-4), transform var(--dur-4)';
                     el.style.opacity = '1';
                     el.style.transform = 'translateY(0)';
                 }, 800 + i * 200);
@@ -254,7 +285,7 @@
     // ===== 3D TILT EFFECT =====
     if (!prefersReduced) {
     document.querySelectorAll('.skill-card, .bento-card, .edu-card, .contact-card').forEach(card => {
-        card.addEventListener('mousemove', e => {
+        rAFPointer(card, e => {
             const rect = card.getBoundingClientRect();
             const x = (e.clientX - rect.left) / rect.width;
             const y = (e.clientY - rect.top) / rect.height;
@@ -264,7 +295,7 @@
         });
         card.addEventListener('mouseleave', () => {
             card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0)';
-            card.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1)';
+            card.style.transition = 'transform var(--dur-3) var(--ease-out)';
         });
         card.addEventListener('mouseenter', () => {
             card.style.transition = 'transform 0.1s ease';
@@ -274,7 +305,7 @@
 
     // ===== SKILL CARD GLOW FOLLOW =====
     document.querySelectorAll('.skill-card').forEach(card => {
-        card.addEventListener('mousemove', e => {
+        rAFPointer(card, e => {
             const rect = card.getBoundingClientRect();
             card.style.setProperty('--mouse-x', ((e.clientX - rect.left) / rect.width * 100) + '%');
             card.style.setProperty('--mouse-y', ((e.clientY - rect.top) / rect.height * 100) + '%');
@@ -398,7 +429,7 @@
     }
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
-    document.addEventListener('mousemove', e => { canvasMouseX = e.clientX; canvasMouseY = e.clientY; });
+    rAFPointer(document, e => { canvasMouseX = e.clientX; canvasMouseY = e.clientY; });
 
     class Particle {
         constructor() { this.reset(); }
@@ -453,7 +484,7 @@
 
     function animateParticles() {
         requestAnimationFrame(animateParticles);
-        if (document.hidden) return;
+        if (document.hidden || !heroVisible) return;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         particles.forEach(p => { p.update(); p.draw(); });
         connectParticles();
@@ -464,7 +495,7 @@
     // ===== MAGNETIC BUTTONS =====
     if (!prefersReduced && finePointer) {
     document.querySelectorAll('.btn').forEach(btn => {
-        btn.addEventListener('mousemove', e => {
+        rAFPointer(btn, e => {
             const rect = btn.getBoundingClientRect();
             const x = e.clientX - rect.left - rect.width / 2;
             const y = e.clientY - rect.top - rect.height / 2;
@@ -476,9 +507,21 @@
     });
     }
 
+    // ===== MAGNETIC NAV LINKS =====
+    if (!prefersReduced && finePointer) {
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        rAFPointer(link, e => {
+            const rect = link.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            link.style.transform = `translateX(${x * 0.18}px)`;
+        });
+        link.addEventListener('mouseleave', () => { link.style.transform = ''; });
+    });
+    }
+
     // ===== PARALLAX ORBS =====
     if (!prefersReduced) {
-    document.addEventListener('mousemove', e => {
+    rAFPointer(document, e => {
         const x = (e.clientX / window.innerWidth - 0.5) * 2;
         const y = (e.clientY / window.innerHeight - 0.5) * 2;
         document.querySelectorAll('.hero-bg-orb').forEach((orb, i) => {
@@ -540,7 +583,7 @@
         }, 30);
     }
     if (!prefersReduced) {
-        document.querySelectorAll('.nav-links a, .section-label').forEach(el => {
+        document.querySelectorAll('.section-label').forEach(el => {
             el.addEventListener('mouseenter', () => scrambleText(el));
         });
     }
@@ -584,12 +627,13 @@
     // ===== CLICK PARTICLE BURST =====
     if (!prefersReduced && finePointer) {
     document.addEventListener('click', e => {
+        if (e.target.closest('a, button, input, textarea, select, label')) return;
         const colors = ['#7c6aff', '#a78bfa', '#34d399', '#ff3366', '#fbbf24'];
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 6; i++) {
             const p = document.createElement('div');
             p.className = 'burst-particle';
-            const angle = (Math.PI * 2 / 12) * i;
-            const distance = 40 + Math.random() * 60;
+            const angle = (Math.PI * 2 / 6) * i;
+            const distance = 24 + Math.random() * 36;
             const bx = Math.cos(angle) * distance;
             const by = Math.sin(angle) * distance;
             p.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;width:${3+Math.random()*4}px;height:${3+Math.random()*4}px;background:${colors[i%colors.length]};--bx:${bx}px;--by:${by}px;`;
@@ -629,7 +673,8 @@
         const skillBarObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.querySelectorAll('.skill-bar-fill').forEach(fill => {
+                    entry.target.querySelectorAll('.skill-bar-fill').forEach((fill, i) => {
+                        fill.style.transitionDelay = (i * 0.08) + 's';
                         fill.style.width = fill.dataset.width + '%';
                     });
                     skillBarObserver.unobserve(entry.target);
@@ -669,6 +714,45 @@
             if (themeMeta) themeMeta.setAttribute('content', isLight ? '#06060a' : '#f6f7fb');
         });
     }
+
+    // ===== PROJECT METRIC COUNT-UP =====
+    if (!prefersReduced) {
+        const metricObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                metricObserver.unobserve(el);
+                const m = el.textContent.match(/^(\d+(?:\.\d+)?)(.*)$/);
+                if (!m) return;
+                const target = parseFloat(m[1]);
+                const suffix = m[2];
+                const decimals = m[1].includes('.') ? 1 : 0;
+                let cur = 0;
+                const step = target / (1100 / 16);
+                const timer = setInterval(() => {
+                    cur += step;
+                    if (cur >= target) { cur = target; clearInterval(timer); }
+                    el.textContent = (decimals ? cur.toFixed(1) : Math.floor(cur)) + suffix;
+                }, 16);
+            });
+        }, { threshold: 0.4 });
+        document.querySelectorAll('.project-metric-num').forEach(el => metricObserver.observe(el));
+    }
+
+    // ===== AMBIENT ANIMATION PAUSE (PERF) =====
+    const heroEl = document.querySelector('.hero');
+    if (heroEl && 'IntersectionObserver' in window) {
+        const heroObserver = new IntersectionObserver(([entry]) => {
+            heroVisible = entry.isIntersecting;
+            document.body.classList.toggle('motion-paused', !entry.isIntersecting);
+        }, { threshold: 0 });
+        heroObserver.observe(heroEl);
+    }
+    document.querySelectorAll('.floating-icons').forEach(el => {
+        new IntersectionObserver(([entry]) => {
+            el.classList.toggle('anim-paused', !entry.isIntersecting);
+        }, { threshold: 0 }).observe(el);
+    });
 
     // ===== KONAMI CODE EASTER EGG =====
     const konamiCode = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
