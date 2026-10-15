@@ -993,7 +993,15 @@
             btn.addEventListener('click', () => openCase(i));
             actions.appendChild(btn);
             const visual = card.querySelector('.project-visual');
-            if (visual) visual.addEventListener('click', () => openCase(i));
+            if (visual) {
+                visual.setAttribute('role', 'button');
+                visual.setAttribute('tabindex', '0');
+                visual.setAttribute('aria-label', 'Open case study: ' + (CASE_STUDIES[i] ? CASE_STUDIES[i].title : 'project'));
+                visual.addEventListener('click', () => openCase(i));
+                visual.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCase(i); }
+                });
+            }
         });
     }
 

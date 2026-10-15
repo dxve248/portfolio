@@ -1958,3 +1958,27 @@
         @media (prefers-reduced-motion: reduce) {
             .kinetic-track { animation: none; }
         }
+
+        /* ===== FINAL POLISH ===== */
+        html { scroll-padding-top: 96px; }
+        @media (max-width: 900px) { html { scroll-padding-top: 84px; } }
+
+        /* Below-fold perf: defer rendering until near viewport */
+        #about, #whyhire, #skills, #terminal, #automation,
+        #experience, #education, #testimonials, #contact {
+            content-visibility: auto;
+            contain-intrinsic-size: auto 900px;
+        }
+
+        @media print {
+            .ambient-light, .hero-canvas, .noise, #particles, .kinetic-strip,
+            .case-overlay, .case-drawer, .back-to-top, #scrollProgress,
+            .case-btn, .ops-spark, .flow-pulse, .flow-icon, .scroll-progress {
+                display: none !important;
+            }
+            .flow-node, .flow-chip { opacity: 1 !important; filter: none !important; transform: none !important; box-shadow: none !important; }
+            .ops-panel { box-shadow: none !important; background: #fff !important; border-color: #ddd !important; }
+            .ops-val { background: none !important; -webkit-text-fill-color: #111827 !important; color: #111827 !important; }
+            .ops-dot, .ops-live { display: none !important; }
+            .case-metric strong { background: none !important; -webkit-text-fill-color: #111827 !important; color: #111827 !important; }
+        }

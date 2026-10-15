@@ -9,6 +9,12 @@
     var reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     var prefersReduced = reduceQuery.matches;
 
+    var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    var saveData = !!(conn && conn.saveData);
+    var narrow = window.matchMedia('(max-width: 760px)').matches;
+    var lowMem = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory < 4;
+    if (saveData || narrow || lowMem) { return; }
+
     var gl = canvas.getContext('webgl', {
         antialias: false,
         alpha: false,
