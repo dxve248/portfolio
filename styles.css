@@ -1072,7 +1072,7 @@
             font-weight: 700; color: var(--text-3); letter-spacing: -0.5px;
             transition: opacity var(--dur-2); white-space: nowrap;
         }
-        .logo-bar-item:hover { opacity: 1.5; }
+        .logo-bar-item:hover { opacity: 1; color: var(--text-2); }
         .logo-bar-item span { color: var(--accent); }
 
         /* ===== WHY HIRE ME ===== */

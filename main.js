@@ -610,7 +610,7 @@
                 outer.className = 'word';
                 const inner = document.createElement('span');
                 inner.className = 'word-inner';
-                inner.textContent = word;
+                inner.innerHTML = word;
                 inner.style.transitionDelay = (idx * 0.05) + 's';
                 outer.appendChild(inner);
                 title.appendChild(outer);
@@ -926,7 +926,7 @@
             stack: ["C#", "WPF", ".NET"], link: "https://github.com/dxve248/windows-debloaterz"
         },
         {
-            title: "Secure Task Manager", cat: "Full-stack · MERN",
+            title: "Secure Task Manager", cat: "Full-stack · Node & React",
             problem: "Most task apps treat authentication as an afterthought.",
             approach: "Built a full-stack MERN task manager hardened with JWT auth, rotating refresh tokens, field-level AES encryption, rate limiting and email-enumeration protection; validated with OWASP ZAP DAST scanning.",
             result: "Secure-by-default task management with role-scoped access.",
