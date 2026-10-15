@@ -255,7 +255,7 @@
     }
 
     if (prefersReduced) {
-        document.querySelectorAll('.stat-num').forEach(setFinalCount);
+        document.querySelectorAll('.stat-num, .ops-num').forEach(setFinalCount);
     } else {
         const counterObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -279,7 +279,7 @@
             });
         }, { threshold: 0.5 });
 
-        document.querySelectorAll('.stat-num').forEach(el => counterObserver.observe(el));
+        document.querySelectorAll('.stat-num, .ops-num').forEach(el => counterObserver.observe(el));
     }
 
     // ===== 3D TILT EFFECT =====
@@ -684,8 +684,39 @@
         document.querySelectorAll('.skill-bars-grid').forEach(el => skillBarObserver.observe(el));
     }
 
+    // ===== AUTOMATION FLOW ACTIVATION =====
+    const flowDiagram = document.getElementById('flowDiagram');
+    function onFlowScroll() {
+        if (!flowDiagram) return;
+        const rect = flowDiagram.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const raw = (vh * 0.85 - rect.top) / (rect.height * 0.5 + vh * 0.3);
+        const progress = Math.min(1, Math.max(0, raw));
+        const step = prefersReduced ? 5 : Math.floor(progress * 5.001);
+        Array.prototype.forEach.call(flowDiagram.children, (el, i) => {
+            el.classList.toggle('on', Math.floor(i / 2) <= step);
+        });
+    }
+
+    // ===== AMBIENT CURSOR LIGHT =====
+    const ambientLight = document.getElementById('ambientLight');
+    if (ambientLight && finePointer && !prefersReduced) {
+        let alx = window.innerWidth / 2, aly = window.innerHeight / 2, alQueued = false;
+        document.addEventListener('mousemove', e => {
+            alx = e.clientX; aly = e.clientY;
+            ambientLight.classList.add('on');
+            if (alQueued) return;
+            alQueued = true;
+            requestAnimationFrame(() => {
+                alQueued = false;
+                ambientLight.style.transform = 'translate3d(' + alx + 'px,' + aly + 'px,0)';
+            });
+        }, { passive: true });
+        window.addEventListener('blur', () => ambientLight.classList.remove('on'));
+    }
+
     // ===== CONSOLIDATED SCROLL HANDLER =====
-    const scrollHandlers = [onScrollProgress, onNavbarScroll, updateActiveNav, onTimelineScroll, onBackToTopScroll];
+    const scrollHandlers = [onScrollProgress, onNavbarScroll, updateActiveNav, onTimelineScroll, onBackToTopScroll, onFlowScroll];
     let scrollTicking = false;
     window.addEventListener('scroll', () => {
         if (scrollTicking) return;
@@ -695,6 +726,7 @@
             scrollTicking = false;
         });
     }, { passive: true });
+    onFlowScroll();
 
     // ===== THEME TOGGLE =====
     const themeToggle = document.getElementById('themeToggle');
@@ -753,6 +785,217 @@
             el.classList.toggle('anim-paused', !entry.isIntersecting);
         }, { threshold: 0 }).observe(el);
     });
+
+    // ===== CASE STUDY DRAWER =====
+    const CASE_STUDIES = [
+        {
+            title: "PwC Brand Dashboard", cat: "Power BI · Data viz",
+            problem: "Senior-stakeholder reporting across the Academy division relied on scattered, inconsistent spreadsheets.",
+            approach: "Designed an interactive Power BI dashboard aligned to PwC's global brand guidelines, with a governed model and drill-down views.",
+            result: "Became the single source of truth for leadership reporting, meeting 100% of PwC's brand and compliance standards.",
+            metrics: [{ v: "100%", l: "Compliance rate" }, { v: "1", l: "Source of truth" }],
+            stack: ["Power BI", "DAX", "Power Query"], link: ""
+        },
+        {
+            title: "Automated Enquiry System", cat: "Automation · Zapier + n8n",
+            problem: "Inbound enquiries were routed by hand - hours of processing, with human error in lead assignment.",
+            approach: "Built an end-to-end routing pipeline in Zapier and n8n that captures, enriches and assigns each lead by rules.",
+            result: "Cut manual processing from hours to seconds and eliminated mis-assignment, saving ~40% of handling time.",
+            metrics: [{ v: "40%", l: "Time saved" }, { v: "Seconds", l: "From hours" }],
+            stack: ["Zapier", "n8n", "Webhooks"], link: ""
+        },
+        {
+            title: "Stock Report Automation", cat: "Automation · Power Automate",
+            problem: "Daily stock reports were compiled and distributed manually, risking missed or late delivery.",
+            approach: "Implemented a Power Automate flow that compiles the report and emails it on schedule to every department head.",
+            result: "Zero missed reports, with hours of manual work removed each week.",
+            metrics: [{ v: "Daily", l: "Reports delivered" }, { v: "0", l: "Missed reports" }],
+            stack: ["Power Automate", "Excel", "Outlook"], link: ""
+        },
+        {
+            title: "IT Infrastructure Overhaul", cat: "Infrastructure · Networking",
+            problem: "Aging servers and network architecture put Tally ERP reliability at risk.",
+            approach: "Upgraded servers, re-architected the network and migrated Tally ERP with a phased plan and rollback safety.",
+            result: "Maintained 100% uptime for Tally ERP - zero downtime through the entire migration.",
+            metrics: [{ v: "0", l: "Downtime" }, { v: "100%", l: "Tally ERP uptime" }],
+            stack: ["Networking", "Tally ERP", "Windows Server"], link: ""
+        },
+        {
+            title: "Email Security Hardening", cat: "Security · Microsoft 365",
+            problem: "Spoofing and phishing were reaching mailboxes, with no SPF, DKIM or DMARC enforcement.",
+            approach: "Configured SPF, DKIM and DMARC across all domains and rolled out anti-phishing rules.",
+            result: "Reduced email-based threats by 99.9% across the organisation.",
+            metrics: [{ v: "99.9%", l: "Threat reduction" }, { v: "SPF/DKIM/DMARC", l: "Enforced" }],
+            stack: ["Microsoft 365", "DMARC", "Defender"], link: ""
+        },
+        {
+            title: "Workspace & M365 Migration", cat: "Migration · Cloud",
+            problem: "A company-wide move from Google Workspace to Microsoft 365 with no room for data loss.",
+            approach: "Led a phased migration of email, OneDrive, SharePoint and Teams with pre-flight checks and verification.",
+            result: "Completed with zero data loss and minimal disruption to users.",
+            metrics: [{ v: "0", l: "Data loss" }, { v: "4", l: "Workloads moved" }],
+            stack: ["Microsoft 365", "SharePoint", "Teams"], link: ""
+        },
+        {
+            title: "Quotation Generator", cat: "Automation · n8n",
+            problem: "Manual quoting was slow and inconsistent in pricing.",
+            approach: "Engineered an n8n system that pulls product data, applies pricing rules and sends branded PDF quotations.",
+            result: "Cut quotation turnaround time by 3x.",
+            metrics: [{ v: "3x", l: "Faster turnaround" }, { v: "PDF", l: "Auto-generated" }],
+            stack: ["n8n", "PDF generation", "Workflow"], link: ""
+        },
+        {
+            title: "DARB & MOIAT Compliance", cat: "Governance · UAE Gov",
+            problem: "Strict UAE government mandates on the DARB toll system and MOIAT portal required provable, penalty-free compliance.",
+            approach: "Managed regulatory compliance across both portals, with audits and security controls.",
+            result: "100% adherence to UAE government mandates with zero penalties.",
+            metrics: [{ v: "100%", l: "Compliance" }, { v: "0", l: "Penalties" }, { v: "A+", l: "Security rating" }],
+            stack: ["Compliance", "UAE Gov", "DARB"], link: ""
+        },
+        {
+            title: "IT Helpdesk Ticketing System", cat: "Web app · Django",
+            problem: "Support requests had no structured tracking, prioritisation or SLA visibility.",
+            approach: "Built a Django helpdesk with role-based access, priority SLA tracking and live overdue detection, TOTP 2FA, a knowledge base, asset inventory and analytics with CSV/Excel export.",
+            result: "A full-featured helpdesk with three user roles and live SLA reporting.",
+            metrics: [{ v: "3", l: "User roles" }, { v: "TOTP", l: "2FA auth" }, { v: "CSV/Excel", l: "Export" }],
+            stack: ["Django", "SQLite", "Bootstrap 5", "Chart.js"], link: "https://github.com/dxve248/ticket-system"
+        },
+        {
+            title: "Mini-SIEM", cat: "Security · Python",
+            problem: "Needed lightweight security monitoring without a heavyweight SIEM.",
+            approach: "Built a Python pipeline for multi-format log ingestion, rule-based detection with alert suppression, incident correlation and risk scoring, surfaced in a Flask + Chart.js triage dashboard.",
+            result: "Real-time, rules-driven triage with a 0-100 risk score per incident.",
+            metrics: [{ v: "0-100", l: "Risk score" }, { v: "Real-time", l: "Event triage" }, { v: "Suppression", l: "Alert de-noise" }],
+            stack: ["Flask", "Detection Engine", "SQLite", "Chart.js"], link: "https://github.com/dxve248/mini-siem"
+        },
+        {
+            title: "PyVault — Zero-Knowledge Password Manager", cat: "Security · FastAPI",
+            problem: "Password managers that decrypt server-side expose secrets to the host.",
+            approach: "Built a self-hosted FastAPI vault where all encryption happens in the browser via WebCrypto + Argon2id - master passwords never reach the server. Added TOTP 2FA, rate limiting and encrypted backups.",
+            result: "A zero-knowledge vault backed by 33 automated tests.",
+            metrics: [{ v: "AES-256", l: "Encryption" }, { v: "33", l: "Automated tests" }, { v: "Zero", l: "Server-side secrets" }],
+            stack: ["FastAPI", "WebCrypto", "Argon2id", "TOTP"], link: "https://github.com/dxve248/pw-manager"
+        },
+        {
+            title: "Windows Debloater", cat: "Desktop app · C# WPF",
+            problem: "Removing Windows 11 bloatware by hand is tedious and risky for non-technical users.",
+            approach: "Built a single-file C#/WPF tool that scans, previews and applies a safe plan with an automatic restore point and undo manifest; a hardcoded blocklist protects critical OS components.",
+            result: "One-click, reversible debloat with a dotnet-tested safety model.",
+            metrics: [{ v: "1-click", l: "Safe debloat" }, { v: "Auto", l: "Restore point" }],
+            stack: ["C#", "WPF", ".NET"], link: "https://github.com/dxve248/windows-debloaterz"
+        },
+        {
+            title: "Secure Task Manager", cat: "Full-stack · MERN",
+            problem: "Most task apps treat authentication as an afterthought.",
+            approach: "Built a full-stack MERN task manager hardened with JWT auth, rotating refresh tokens, field-level AES encryption, rate limiting and email-enumeration protection; validated with OWASP ZAP DAST scanning.",
+            result: "Secure-by-default task management with role-scoped access.",
+            metrics: [{ v: "JWT", l: "Secure auth" }, { v: "AES", l: "Field-level crypto" }, { v: "ZAP", l: "DAST scanned" }],
+            stack: ["Node.js", "Express", "React", "SQLite"], link: "https://github.com/dxve248/STM"
+        },
+        {
+            title: "Real-Time Object Detection", cat: "AI · Computer vision",
+            problem: "Needed a production-ready computer-vision pipeline, not a notebook.",
+            approach: "Built an end-to-end YOLOv8 pipeline: MLflow-tracked training, a FastAPI REST API, WebSocket streaming, A/B testing, drift detection, GPU optimisation and Docker + GitHub Actions CI/CD.",
+            result: "A low-latency, reproducible detection service.",
+            metrics: [{ v: "YOLOv8", l: "Model" }, { v: "WebSocket", l: "Streaming" }, { v: "CI/CD", l: "Docker + Actions" }],
+            stack: ["YOLOv8", "PyTorch", "FastAPI", "Docker"], link: "https://github.com/dxve248/Object-Detection"
+        }
+    ];
+
+    const caseDrawer = document.getElementById('caseDrawer');
+    if (caseDrawer) {
+        const caseOverlay = document.getElementById('caseOverlay');
+        const caseClose = document.getElementById('caseClose');
+        const caseImage = document.getElementById('caseImage');
+        const caseEyebrow = document.getElementById('caseEyebrow');
+        const caseTitle = document.getElementById('caseTitle');
+        const caseMetrics = document.getElementById('caseMetrics');
+        const caseProblem = document.getElementById('caseProblem');
+        const caseApproach = document.getElementById('caseApproach');
+        const caseResult = document.getElementById('caseResult');
+        const caseStack = document.getElementById('caseStack');
+        const caseLink = document.getElementById('caseLink');
+        const caseScroll = document.getElementById('caseScroll');
+        let caseLastFocus = null;
+
+        function makeEl(tag, cls, text) {
+            const n = document.createElement(tag);
+            if (cls) n.className = cls;
+            if (text != null) n.textContent = text;
+            return n;
+        }
+
+        function openCase(i) {
+            const p = CASE_STUDIES[i];
+            if (!p) return;
+            caseLastFocus = document.activeElement;
+            const card = document.querySelectorAll('.project-card')[i];
+            const img = card && card.querySelector('img');
+            if (img) { caseImage.src = img.currentSrc || img.src; caseImage.alt = p.title; }
+            caseEyebrow.textContent = p.cat;
+            caseTitle.textContent = p.title;
+            caseMetrics.replaceChildren();
+            (p.metrics || []).forEach(m => {
+                const c = makeEl('div', 'case-metric');
+                c.appendChild(makeEl('strong', null, m.v));
+                c.appendChild(makeEl('span', null, m.l));
+                caseMetrics.appendChild(c);
+            });
+            caseProblem.textContent = p.problem;
+            caseApproach.textContent = p.approach;
+            caseResult.textContent = p.result;
+            caseStack.replaceChildren();
+            (p.stack || []).forEach(s => caseStack.appendChild(makeEl('span', 'case-tech', s)));
+            if (p.link) { caseLink.href = p.link; caseLink.hidden = false; }
+            else { caseLink.hidden = true; caseLink.removeAttribute('href'); }
+            caseDrawer.classList.add('open');
+            caseOverlay.classList.add('open');
+            caseDrawer.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('case-open');
+            if (caseScroll) caseScroll.scrollTop = 0;
+            caseClose.focus();
+        }
+
+        function closeCase() {
+            caseDrawer.classList.remove('open');
+            caseOverlay.classList.remove('open');
+            caseDrawer.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('case-open');
+            if (caseLastFocus && caseLastFocus.focus) caseLastFocus.focus();
+        }
+
+        caseClose.addEventListener('click', closeCase);
+        caseOverlay.addEventListener('click', closeCase);
+        document.addEventListener('keydown', e => {
+            if (!caseDrawer.classList.contains('open')) return;
+            if (e.key === 'Escape') { closeCase(); return; }
+            if (e.key === 'Tab') {
+                const f = caseDrawer.querySelectorAll('a[href], button');
+                if (!f.length) return;
+                const first = f[0], last = f[f.length - 1];
+                if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+                else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+            }
+        });
+
+        Array.prototype.forEach.call(document.querySelectorAll('.project-card'), (card, i) => {
+            const body = card.querySelector('.project-body');
+            if (!body) return;
+            let actions = body.querySelector('.project-actions');
+            if (!actions) {
+                const existing = body.querySelector('div[style*="margin-top"]');
+                actions = makeEl('div', 'project-actions');
+                if (existing) { while (existing.firstChild) actions.appendChild(existing.firstChild); existing.remove(); }
+                body.appendChild(actions);
+            }
+            const btn = makeEl('button', 'case-btn', 'Case study');
+            btn.type = 'button';
+            btn.addEventListener('click', () => openCase(i));
+            actions.appendChild(btn);
+            const visual = card.querySelector('.project-visual');
+            if (visual) visual.addEventListener('click', () => openCase(i));
+        });
+    }
 
     // ===== KONAMI CODE EASTER EGG =====
     const konamiCode = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];

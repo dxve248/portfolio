@@ -74,6 +74,9 @@
 <!-- Scroll Progress -->
 <div class="scroll-progress" id="scrollProgress"></div>
 
+<!-- Ambient Light -->
+<div class="ambient-light" id="ambientLight" aria-hidden="true"></div>
+
 <!-- Noise Overlay -->
 <div class="noise"></div>
 
@@ -91,6 +94,7 @@
             <li><a href="#about">About</a></li>
             <li><a href="#whyhire">Why Me</a></li>
             <li><a href="#skills">Skills</a></li>
+            <li><a href="#automation">Automation</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#experience">Experience</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -113,6 +117,7 @@
     <div class="hero-bg-orb o1"></div>
     <div class="hero-bg-orb o2"></div>
     <div class="hero-bg-orb o3"></div>
+    <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
     <div class="hero-grid"></div>
     <div class="hero-blob">
         <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
@@ -591,6 +596,103 @@
     </div>
 </section>
 
+<!-- Automation Workflow -->
+<section id="automation">
+    <div class="section-inner">
+        <div class="section-header reveal">
+            <p class="section-label">Automation</p>
+            <h2 class="section-title">Systems that<br>run themselves.</h2>
+            <p class="section-subtitle">What happens the moment a lead hits submit - a pipeline I built to route, decide and notify with no one at the wheel.</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="flow" id="flowDiagram">
+            <div class="flow-node" style="--i:0">
+                <div class="flow-icon" aria-hidden="true">&#x1F4E5;</div>
+                <div class="flow-label">Enquiry</div>
+                <div class="flow-sub">Web form</div>
+            </div>
+            <div class="flow-link" style="--i:0"><span class="flow-pulse"></span></div>
+            <div class="flow-node" style="--i:1">
+                <div class="flow-icon" aria-hidden="true">&#x26A1;</div>
+                <div class="flow-label">Zapier</div>
+                <div class="flow-sub">Route &amp; enrich</div>
+            </div>
+            <div class="flow-link" style="--i:1"><span class="flow-pulse"></span></div>
+            <div class="flow-node" style="--i:2">
+                <div class="flow-icon" aria-hidden="true">&#x1F500;</div>
+                <div class="flow-label">n8n</div>
+                <div class="flow-sub">Logic + AI agent</div>
+            </div>
+            <div class="flow-link" style="--i:2"><span class="flow-pulse"></span></div>
+            <div class="flow-node" style="--i:3">
+                <div class="flow-icon" aria-hidden="true">&#x1F5C2;</div>
+                <div class="flow-label">CRM</div>
+                <div class="flow-sub">Record &amp; assign</div>
+            </div>
+            <div class="flow-link" style="--i:3"><span class="flow-pulse"></span></div>
+            <div class="flow-node" style="--i:4">
+                <div class="flow-icon" aria-hidden="true">&#x1F4E3;</div>
+                <div class="flow-label">Notify</div>
+                <div class="flow-sub">Owner alerted</div>
+            </div>
+        </div>
+
+        <div class="flow-branches reveal">
+            <span class="flow-chip">&#x1F4CA; Power BI sync</span>
+            <span class="flow-chip">&#x1F916; LLM quote draft</span>
+            <span class="flow-chip">&#x23F1; SLA watchdog</span>
+            <span class="flow-chip">&#x1F4C5; Daily stock report</span>
+        </div>
+
+        <div class="ops-panel reveal">
+            <div class="ops-head">
+                <div class="ops-title"><span class="ops-dot" aria-hidden="true"></span> Operations board</div>
+                <div class="ops-live">Always on</div>
+            </div>
+            <div class="ops-grid">
+                <div class="ops-kpi">
+                    <div class="ops-val"><span class="ops-num" data-count="14">0</span></div>
+                    <div class="ops-label">Systems shipped</div>
+                    <svg class="ops-spark" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><polyline points="0,28 15,26 30,27 45,22 60,24 75,17 90,18 105,11 120,8"/></svg>
+                </div>
+                <div class="ops-kpi">
+                    <div class="ops-val"><span class="ops-num" data-count="3">0</span></div>
+                    <div class="ops-label">Platforms orchestrated</div>
+                    <svg class="ops-spark" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><polyline points="0,30 15,27 30,28 45,24 60,25 75,19 90,20 105,14 120,12"/></svg>
+                </div>
+                <div class="ops-kpi">
+                    <div class="ops-val"><span class="ops-num" data-count="100">0</span><span class="ops-sym">%</span></div>
+                    <div class="ops-label">On-time delivery</div>
+                    <svg class="ops-spark" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><polyline points="0,18 15,17 30,18 45,15 60,16 75,13 90,14 105,11 120,10"/></svg>
+                </div>
+                <div class="ops-kpi">
+                    <div class="ops-val"><span>24/7</span></div>
+                    <div class="ops-label">Runs unattended</div>
+                    <svg class="ops-spark" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true"><polyline points="0,26 15,24 30,25 45,22 60,23 75,19 90,20 105,16 120,15"/></svg>
+                </div>
+            </div>
+            <div class="ops-foot">Zapier &middot; n8n &middot; Power Automate &middot; Power BI &middot; Microsoft 365</div>
+        </div>
+    </div>
+</section>
+
+<!-- Kinetic Headline -->
+<div class="kinetic-strip" aria-hidden="true">
+    <div class="kinetic-track">
+        <span>Automation</span><i>&#9670;</i>
+        <span>Infrastructure</span><i>&#9670;</i>
+        <span>Data</span><i>&#9670;</i>
+        <span>Security</span><i>&#9670;</i>
+        <span>AI</span><i>&#9670;</i>
+        <span>Automation</span><i>&#9670;</i>
+        <span>Infrastructure</span><i>&#9670;</i>
+        <span>Data</span><i>&#9670;</i>
+        <span>Security</span><i>&#9670;</i>
+        <span>AI</span><i>&#9670;</i>
+    </div>
+</div>
+
 <!-- Projects -->
 <section id="projects">
     <div class="section-inner">
@@ -763,7 +865,7 @@
             </div>
             <div class="project-card reveal">
                 <div class="project-visual">
-                    <img src="assets/projects/p09.svg" alt="IT Helpdesk Ticketing System" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/mock-09.svg" alt="IT Helpdesk Ticketing System" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">3</div>
@@ -790,7 +892,7 @@
             </div>
             <div class="project-card reveal reveal-delay-1">
                 <div class="project-visual">
-                    <img src="assets/projects/p10.svg" alt="Mini-SIEM" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/mock-10.svg" alt="Mini-SIEM" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">0-100</div>
@@ -817,7 +919,7 @@
             </div>
             <div class="project-card reveal reveal-delay-2">
                 <div class="project-visual">
-                    <img src="assets/projects/p11.svg" alt="PyVault Password Manager" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/mock-11.svg" alt="PyVault Password Manager" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">AES-256</div>
@@ -844,7 +946,7 @@
             </div>
             <div class="project-card reveal reveal-delay-3">
                 <div class="project-visual">
-                    <img src="assets/projects/p12.svg" alt="Windows Debloater" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/mock-12.svg" alt="Windows Debloater" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">1-Click</div>
@@ -871,7 +973,7 @@
             </div>
             <div class="project-card reveal">
                 <div class="project-visual">
-                    <img src="assets/projects/p13.svg" alt="Secure Task Manager" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/mock-13.svg" alt="Secure Task Manager" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">JWT</div>
@@ -898,7 +1000,7 @@
             </div>
             <div class="project-card reveal reveal-delay-1">
                 <div class="project-visual">
-                    <img src="assets/projects/p14.svg" alt="Real-Time Object Detection" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/mock-14.svg" alt="Real-Time Object Detection" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">YOLOv8</div>
@@ -1269,6 +1371,25 @@
     </div>
 </footer>
 
+<!-- Case Study Drawer -->
+<div class="case-overlay" id="caseOverlay"></div>
+<aside class="case-drawer" id="caseDrawer" role="dialog" aria-modal="true" aria-labelledby="caseTitle" aria-hidden="true">
+    <button class="case-close" id="caseClose" aria-label="Close case study">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="case-scroll" id="caseScroll">
+        <div class="case-media"><img id="caseImage" src="" alt="" width="600" height="340" loading="lazy" decoding="async"></div>
+        <p class="case-eyebrow" id="caseEyebrow"></p>
+        <h3 class="case-title" id="caseTitle"></h3>
+        <div class="case-metrics" id="caseMetrics"></div>
+        <div class="case-block"><h4>Problem</h4><p id="caseProblem"></p></div>
+        <div class="case-block"><h4>Approach</h4><p id="caseApproach"></p></div>
+        <div class="case-block"><h4>Result</h4><p id="caseResult"></p></div>
+        <div class="case-stack" id="caseStack"></div>
+        <a class="case-link" id="caseLink" target="_blank" rel="noopener" hidden>View repository</a>
+    </div>
+</aside>
+
 <!-- Back to Top -->
 <button class="back-to-top" id="backToTop" aria-label="Back to top">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
@@ -1283,5 +1404,6 @@
 </div>
 
 <script src="main.js" defer></script>
+<script src="assets/hero-mesh.js" defer></script>
 </body>
 </html>
