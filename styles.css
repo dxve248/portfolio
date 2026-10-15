@@ -1499,17 +1499,17 @@
         }
         .spotlight-section:hover::after { opacity: 1; }
 
-        /* ===== STAGGERED LETTER REVEAL ===== */
-        .letter-reveal .letter {
+        /* ===== WORD-BY-WORD TITLE REVEAL ===== */
+        .word-reveal .word {
+            display: inline-block; overflow: hidden; vertical-align: top;
+            padding-bottom: 0.14em; margin-bottom: -0.14em;
+        }
+        .word-reveal .word-inner {
             display: inline-block;
-            transform: translateY(100%);
-            opacity: 0;
-            transition: all var(--dur-4) var(--ease-out);
+            transform: translateY(115%);
+            transition: transform var(--dur-4) var(--ease-out);
         }
-        .letter-reveal.visible .letter {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        .word-reveal.visible .word-inner { transform: translateY(0); }
 
         /* ===== CLICK PARTICLE BURST ===== */
         .burst-particle {
@@ -1680,11 +1680,13 @@
             html { scroll-behavior: auto; }
             .loader { display: none; }
             .cursor-dot, .cursor-ring, .trail-particle { display: none !important; }
-            .reveal, .reveal-scale, .letter-reveal .letter, .stagger-reveal > *,
+            .reveal, .reveal-scale, .word-reveal .word-inner, .stagger-reveal > *,
             .hero-overline, .hero-desc, .hero-actions, .hero-socials {
                 opacity: 1 !important; transform: none !important;
             }
             .hero h1 .line span { transform: none !important; }
+            .js .section-wipe::before { display: none !important; }
+            .timeline-item::before { transform: translateX(-4.5px) scale(1) !important; }
             .marquee-track { animation: none; }
             .project-visual img { animation: none !important; }
         }
@@ -1981,4 +1983,100 @@
             .ops-val { background: none !important; -webkit-text-fill-color: #111827 !important; color: #111827 !important; }
             .ops-dot, .ops-live { display: none !important; }
             .case-metric strong { background: none !important; -webkit-text-fill-color: #111827 !important; color: #111827 !important; }
+        }
+
+        /* ===== SECTION REVEAL WIPES ===== */
+        .section-wipe { position: relative; }
+        .js .section-wipe::before {
+            content: ''; position: absolute; inset: 0; z-index: 6;
+            pointer-events: none; background: var(--bg);
+            transform: scaleY(1); transform-origin: bottom;
+            transition: transform 1s var(--ease-in-out);
+            will-change: transform;
+        }
+        .js #projects.section-wipe::before,
+        .js #testimonials.section-wipe::before { background: var(--bg-2); }
+        .js .section-wipe.wiped::before { transform: scaleY(0); }
+
+        /* ===== CARD SHEEN SWEEP ===== */
+        .project-card, .testimonial-card, .skill-bar-item { position: relative; }
+        .testimonial-card, .skill-bar-item { overflow: hidden; }
+        .project-card::after, .hire-card::after, .testimonial-card::after,
+        .edu-card::after, .bento-card::after, .skill-bar-item::after {
+            content: ''; position: absolute; top: 0; left: -80%;
+            width: 50%; height: 100%; z-index: 2;
+            background: linear-gradient(105deg, transparent, rgba(255,255,255,0.06), transparent);
+            transform: skewX(-20deg); transition: left var(--dur-4) ease; pointer-events: none;
+        }
+        .project-card:hover::after, .hire-card:hover::after, .testimonial-card:hover::after,
+        .edu-card:hover::after, .bento-card:hover::after, .skill-bar-item:hover::after { left: 120%; }
+        [data-theme="light"] .project-card::after, [data-theme="light"] .hire-card::after,
+        [data-theme="light"] .testimonial-card::after, [data-theme="light"] .edu-card::after,
+        [data-theme="light"] .bento-card::after, [data-theme="light"] .skill-bar-item::after {
+            background: linear-gradient(105deg, transparent, rgba(23,23,60,0.06), transparent);
+        }
+
+        /* ===== SCROLL PARALLAX ===== */
+        .section-num, .hero-grid {
+            transform: translate3d(0, calc(var(--parallax, 0) * 1px), 0);
+            will-change: transform;
+        }
+
+        /* ===== ROTATING GRADIENT BORDERS ===== */
+        @property --bd-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+        .btn::after, .project-card::before, .testimonial-card::before, .skill-bar-item::before {
+            content: ''; position: absolute; inset: 0; border-radius: inherit;
+            padding: 1px; pointer-events: none; opacity: 0; z-index: 3;
+            background: conic-gradient(from var(--bd-angle, 0deg), transparent 0deg, var(--accent) 70deg, var(--accent-3) 150deg, transparent 215deg);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask-composite: exclude;
+            transition: opacity var(--dur-3) var(--ease-out);
+        }
+        .btn:hover::after, .project-card:hover::before,
+        .testimonial-card:hover::before, .skill-bar-item:hover::before {
+            opacity: 1; animation: bdSpin 3s linear infinite;
+        }
+        @keyframes bdSpin { to { --bd-angle: 360deg; } }
+
+        /* ===== TIMELINE DRAW-DOWN ===== */
+        .timeline-item::before { transform: translateX(-4.5px) scale(0); }
+        .timeline-item.reveal.visible::before,
+        .timeline-item:not(.reveal)::before {
+            transform: translateX(-4.5px) scale(1);
+            transition: transform 0.45s var(--ease-out) 0.1s;
+        }
+        .timeline-progress::after {
+            content: ''; position: absolute; left: 50%; bottom: 0;
+            width: 9px; height: 9px; border-radius: 50%;
+            transform: translate(-50%, 50%);
+            background: var(--accent);
+            box-shadow: 0 0 14px 3px rgba(124,106,255,0.65);
+        }
+
+        /* ===== CONTACT CTA BURST ===== */
+        .cta-burst {
+            position: fixed; z-index: 10000; width: 8px; height: 8px;
+            border-radius: 50%; pointer-events: none;
+            animation: ctaBurst 0.8s var(--ease-out) forwards;
+        }
+        @keyframes ctaBurst {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(calc(-50% + var(--bx)), calc(-50% + var(--by))) scale(0); opacity: 0; }
+        }
+        .cta-ring {
+            position: fixed; z-index: 10000; width: 22px; height: 22px;
+            border-radius: 50%; border: 2px solid var(--accent-2);
+            pointer-events: none; animation: ctaRing 0.7s var(--ease-out) forwards;
+        }
+        @keyframes ctaRing {
+            0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0.9; }
+            100% { transform: translate(-50%, -50%) scale(3.4); opacity: 0; }
+        }
+        .btn.pulse-confirm { animation: ctaConfirm 0.6s var(--ease-out); }
+        @keyframes ctaConfirm {
+            0% { transform: scale(1); }
+            40% { transform: scale(0.955); }
+            100% { transform: scale(1); }
         }

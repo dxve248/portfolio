@@ -28,15 +28,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-    <script>try{if(localStorage.getItem('theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+    <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
     <link rel="stylesheet" href="styles.css">
     <noscript>
         <style>
             .loader { display: none !important; }
             .cursor-dot, .cursor-ring { display: none; }
-            .reveal, .reveal-scale, .letter-reveal .letter, .stagger-reveal > *,
+            .reveal, .reveal-scale, .word-reveal .word-inner, .stagger-reveal > *,
             .hero-overline, .hero-desc, .hero-actions, .hero-socials { opacity: 1 !important; transform: none !important; }
             .hero h1 .line span { transform: none !important; }
+            .section-wipe::before { display: none !important; }
+            .timeline-item::before { transform: translateX(-4.5px) scale(1) !important; }
         </style>
     </noscript>
     <script type="application/ld+json">
@@ -220,7 +222,7 @@
 </div>
 
 <!-- About -->
-<section id="about" class="spotlight-section">
+<section id="about" class="spotlight-section section-wipe">
     <div class="section-num">01</div>
     <div class="floating-icons">
         <div class="float-icon">&#x2699;</div>
@@ -310,7 +312,7 @@
 </section>
 
 <!-- Why Hire Me -->
-<section id="whyhire">
+<section id="whyhire" class="section-wipe">
     <div class="section-inner">
         <div class="section-header reveal">
             <p class="section-label">Value</p>
@@ -353,7 +355,7 @@
 </section>
 
 <!-- Skills -->
-<section id="skills" class="spotlight-section">
+<section id="skills" class="spotlight-section section-wipe">
     <div class="section-num">02</div>
     <div class="section-inner">
         <div class="section-header reveal">
@@ -561,7 +563,7 @@
 </section>
 
 <!-- Terminal -->
-<section class="terminal-section" id="terminal">
+<section class="terminal-section section-wipe" id="terminal">
     <div class="section-inner">
         <div class="section-header reveal" style="text-align:center;">
             <p class="section-label" style="justify-content:center;">Showcase</p>
@@ -581,7 +583,7 @@
 </section>
 
 <!-- Automation Workflow -->
-<section id="automation">
+<section id="automation" class="section-wipe">
     <div class="section-inner">
         <div class="section-header reveal">
             <p class="section-label">Automation</p>
@@ -678,7 +680,7 @@
 </div>
 
 <!-- Projects -->
-<section id="projects">
+<section id="projects" class="section-wipe">
     <div class="section-inner">
         <div class="section-header reveal">
             <p class="section-label">Impact</p>
@@ -1013,7 +1015,7 @@
 </section>
 
 <!-- Experience -->
-<section id="experience" class="spotlight-section">
+<section id="experience" class="spotlight-section section-wipe">
     <div class="section-num">03</div>
     <div class="section-inner">
         <div class="section-header reveal">
@@ -1070,7 +1072,7 @@
 </section>
 
 <!-- Education & Certifications -->
-<section id="education">
+<section id="education" class="section-wipe">
     <div class="section-num">04</div>
     <div class="section-inner">
         <div class="section-header reveal">
@@ -1190,7 +1192,7 @@
 </section>
 
 <!-- Testimonials -->
-<section id="testimonials">
+<section id="testimonials" class="section-wipe">
     <div class="section-inner">
         <div class="section-header reveal">
             <p class="section-label">Testimonials</p>
@@ -1236,7 +1238,7 @@
 </section>
 
 <!-- Contact -->
-<section id="contact">
+<section id="contact" class="section-wipe">
     <div class="section-num">05</div>
     <div class="section-inner">
         <div class="section-header reveal">

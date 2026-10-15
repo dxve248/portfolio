@@ -597,31 +597,57 @@
         });
     });
 
-    // ===== STAGGERED LETTER REVEAL =====
+    // ===== WORD-BY-WORD TITLE REVEAL =====
     document.querySelectorAll('.section-title').forEach(title => {
-        const text = title.textContent;
+        const parts = title.innerHTML.split(/<br\s*\/?>/i);
         title.innerHTML = '';
-        title.classList.add('letter-reveal');
-        [...text].forEach((char, i) => {
-            const span = document.createElement('span');
-            span.className = 'letter';
-            span.textContent = char === ' ' ? '\u00A0' : char;
-            span.style.transitionDelay = (i * 0.03) + 's';
-            title.appendChild(span);
+        title.classList.add('word-reveal');
+        let idx = 0;
+        parts.forEach((seg, pi) => {
+            const words = seg.trim().split(/\s+/).filter(Boolean);
+            words.forEach((word, wi) => {
+                const outer = document.createElement('span');
+                outer.className = 'word';
+                const inner = document.createElement('span');
+                inner.className = 'word-inner';
+                inner.textContent = word;
+                inner.style.transitionDelay = (idx * 0.05) + 's';
+                outer.appendChild(inner);
+                title.appendChild(outer);
+                idx++;
+                if (wi < words.length - 1) title.appendChild(document.createTextNode(' '));
+            });
+            if (pi < parts.length - 1) title.appendChild(document.createElement('br'));
         });
     });
     if (prefersReduced) {
-        document.querySelectorAll('.letter-reveal').forEach(el => el.classList.add('visible'));
+        document.querySelectorAll('.word-reveal').forEach(el => el.classList.add('visible'));
     } else {
-        const letterObserver = new IntersectionObserver((entries) => {
+        const wordObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    letterObserver.unobserve(entry.target);
+                    wordObserver.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.3 });
-        document.querySelectorAll('.letter-reveal').forEach(el => letterObserver.observe(el));
+        document.querySelectorAll('.word-reveal').forEach(el => wordObserver.observe(el));
+    }
+
+    // ===== SECTION REVEAL WIPES =====
+    const wipeSections = document.querySelectorAll('.section-wipe');
+    if (prefersReduced) {
+        wipeSections.forEach(el => el.classList.add('wiped'));
+    } else {
+        const wipeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('wiped');
+                    wipeObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.04, rootMargin: '0px 0px -8% 0px' });
+        wipeSections.forEach(el => wipeObserver.observe(el));
     }
 
     // ===== CLICK PARTICLE BURST =====
@@ -715,8 +741,22 @@
         window.addEventListener('blur', () => ambientLight.classList.remove('on'));
     }
 
+    // ===== SCROLL PARALLAX =====
+    const parallaxEls = document.querySelectorAll('.section-num, .hero-grid');
+    function onParallaxScroll() {
+        if (prefersReduced || !parallaxEls.length) return;
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const mid = vh * 0.5;
+        parallaxEls.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const center = rect.top + rect.height / 2;
+            const offset = (mid - center) * 0.06;
+            el.style.setProperty('--parallax', offset.toFixed(2));
+        });
+    }
+
     // ===== CONSOLIDATED SCROLL HANDLER =====
-    const scrollHandlers = [onScrollProgress, onNavbarScroll, updateActiveNav, onTimelineScroll, onBackToTopScroll, onFlowScroll];
+    const scrollHandlers = [onScrollProgress, onNavbarScroll, updateActiveNav, onTimelineScroll, onBackToTopScroll, onFlowScroll, onParallaxScroll];
     let scrollTicking = false;
     window.addEventListener('scroll', () => {
         if (scrollTicking) return;
@@ -727,6 +767,7 @@
         });
     }, { passive: true });
     onFlowScroll();
+    onParallaxScroll();
 
     // ===== THEME TOGGLE =====
     const themeToggle = document.getElementById('themeToggle');
@@ -1002,6 +1043,47 @@
                     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCase(i); }
                 });
             }
+        });
+    }
+
+    // ===== MAGNETIC ACTION ELEMENTS =====
+    if (!prefersReduced && finePointer) {
+        document.querySelectorAll('.case-btn, .github-link').forEach(el => {
+            rAFPointer(el, e => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                el.style.transform = `translate(${x * 0.22}px, ${y * 0.22}px)`;
+            });
+            el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+        });
+    }
+
+    // ===== CONTACT CTA BURST =====
+    const ctaBtn = document.querySelector('.cta-actions .btn-primary');
+    if (ctaBtn && !prefersReduced && finePointer) {
+        ctaBtn.addEventListener('click', e => {
+            const rect = ctaBtn.getBoundingClientRect();
+            const cx = e.clientX || (rect.left + rect.width / 2);
+            const cy = e.clientY || (rect.top + rect.height / 2);
+            const colors = ['#7c6aff', '#a78bfa', '#22d3ee', '#34d399'];
+            for (let i = 0; i < 14; i++) {
+                const p = document.createElement('div');
+                p.className = 'cta-burst';
+                const angle = (Math.PI * 2 / 14) * i;
+                const dist = 40 + Math.random() * 60;
+                p.style.cssText = `left:${cx}px;top:${cy}px;width:${4 + Math.random() * 5}px;height:${4 + Math.random() * 5}px;background:${colors[i % colors.length]};--bx:${Math.cos(angle) * dist}px;--by:${Math.sin(angle) * dist}px;`;
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 850);
+            }
+            const ring = document.createElement('div');
+            ring.className = 'cta-ring';
+            ring.style.cssText = `left:${cx}px;top:${cy}px;`;
+            document.body.appendChild(ring);
+            setTimeout(() => ring.remove(), 750);
+            ctaBtn.classList.remove('pulse-confirm');
+            void ctaBtn.offsetWidth;
+            ctaBtn.classList.add('pulse-confirm');
         });
     }
 
