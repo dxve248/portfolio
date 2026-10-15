@@ -651,6 +651,25 @@
         });
     }, { passive: true });
 
+    // ===== THEME TOGGLE =====
+    const themeToggle = document.getElementById('themeToggle');
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeMeta && document.documentElement.getAttribute('data-theme') === 'light') {
+        themeMeta.setAttribute('content', '#f6f7fb');
+    }
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            if (isLight) {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+            try { localStorage.setItem('theme', isLight ? 'dark' : 'light'); } catch (e) {}
+            if (themeMeta) themeMeta.setAttribute('content', isLight ? '#06060a' : '#f6f7fb');
+        });
+    }
+
     // ===== KONAMI CODE EASTER EGG =====
     const konamiCode = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
     let konamiIndex = 0;

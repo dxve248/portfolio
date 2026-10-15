@@ -28,6 +28,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>try{if(localStorage.getItem('theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
     <link rel="stylesheet" href="styles.css">
     <noscript>
         <style>
@@ -94,9 +95,15 @@
             <li><a href="#experience">Experience</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
-            <span></span><span></span><span></span>
-        </button>
+        <div class="nav-actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
     </div>
 </nav>
 
@@ -595,7 +602,7 @@
         <div class="projects-grid">
             <div class="project-card reveal">
                 <div class="project-visual">
-                    <img src="assets/projects/p01.jpg" alt="PwC Brand Dashboard" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/p01.svg" alt="PwC Brand Dashboard" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">100%</div>
@@ -615,7 +622,7 @@
             </div>
             <div class="project-card reveal reveal-delay-1">
                 <div class="project-visual">
-                    <img src="assets/projects/p02.jpg" alt="Automated Enquiry System" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/p02.svg" alt="Automated Enquiry System" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">40%</div>
@@ -635,7 +642,7 @@
             </div>
             <div class="project-card reveal reveal-delay-2">
                 <div class="project-visual">
-                    <img src="assets/projects/p03.jpg" alt="Stock Report Automation" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/p03.svg" alt="Stock Report Automation" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">Daily</div>
@@ -655,7 +662,7 @@
             </div>
             <div class="project-card reveal reveal-delay-3">
                 <div class="project-visual">
-                    <img src="assets/projects/p04.jpg" alt="IT Infrastructure Overhaul" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/p04.svg" alt="IT Infrastructure Overhaul" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">Zero</div>
@@ -675,7 +682,7 @@
             </div>
             <div class="project-card reveal">
                 <div class="project-visual">
-                    <img src="assets/projects/p05.jpg" alt="Email Security Hardening" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/p05.svg" alt="Email Security Hardening" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">99.9%</div>
@@ -695,7 +702,7 @@
             </div>
             <div class="project-card reveal reveal-delay-1">
                 <div class="project-visual">
-                    <img src="assets/projects/p06.jpg" alt="MS365 Migration" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/p06.svg" alt="MS365 Migration" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">Zero</div>
@@ -715,7 +722,7 @@
             </div>
             <div class="project-card reveal reveal-delay-2">
                 <div class="project-visual">
-                    <img src="assets/projects/p07.jpg" alt="Quotation Generator" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/p07.svg" alt="Quotation Generator" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">3x</div>
@@ -735,7 +742,7 @@
             </div>
             <div class="project-card reveal reveal-delay-3">
                 <div class="project-visual">
-                    <img src="assets/projects/p08.jpg" alt="DARB Compliance" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/p08.svg" alt="DARB Compliance" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">A+</div>
@@ -755,7 +762,7 @@
             </div>
             <div class="project-card reveal">
                 <div class="project-visual">
-                    <img src="assets/projects/p09.jpg" alt="IT Helpdesk Ticketing System" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/p09.svg" alt="IT Helpdesk Ticketing System" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">3</div>
@@ -782,7 +789,7 @@
             </div>
             <div class="project-card reveal reveal-delay-1">
                 <div class="project-visual">
-                    <img src="assets/projects/p10.jpg" alt="Mini-SIEM" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/p10.svg" alt="Mini-SIEM" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">0-100</div>
@@ -809,7 +816,7 @@
             </div>
             <div class="project-card reveal reveal-delay-2">
                 <div class="project-visual">
-                    <img src="assets/projects/p11.jpg" alt="PyVault Password Manager" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/p11.svg" alt="PyVault Password Manager" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">AES-256</div>
@@ -836,7 +843,7 @@
             </div>
             <div class="project-card reveal reveal-delay-3">
                 <div class="project-visual">
-                    <img src="assets/projects/p12.jpg" alt="Windows Debloater" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/p12.svg" alt="Windows Debloater" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">1-Click</div>
@@ -863,7 +870,7 @@
             </div>
             <div class="project-card reveal">
                 <div class="project-visual">
-                    <img src="assets/projects/p13.jpg" alt="Secure Task Manager" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/p13.svg" alt="Secure Task Manager" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">JWT</div>
@@ -890,7 +897,7 @@
             </div>
             <div class="project-card reveal reveal-delay-1">
                 <div class="project-visual">
-                    <img src="assets/projects/p14.jpg" alt="Real-Time Object Detection" width="600" height="340" loading="lazy" decoding="async">
+                    <img src="assets/projects/p14.svg" alt="Real-Time Object Detection" width="600" height="340" loading="lazy" decoding="async">
                     <div class="project-overlay">
                         <div class="project-metric">
                             <div class="project-metric-num">YOLOv8</div>
