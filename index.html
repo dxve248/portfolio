@@ -37,7 +37,7 @@
             .reveal, .reveal-scale, .word-reveal .word-inner, .stagger-reveal > *,
             .hero-overline, .hero-desc, .hero-actions, .hero-socials { opacity: 1 !important; transform: none !important; }
             .hero h1 .line span { transform: none !important; }
-            .section-wipe::before { display: none !important; }
+            .section-wipe::after { display: none !important; }
             .timeline-item::before { transform: translateX(-4.5px) scale(1) !important; }
         </style>
     </noscript>
@@ -86,7 +86,7 @@
 <div class="bg-gradient-anim"></div>
 
 <!-- Particle Canvas -->
-<canvas id="particles" aria-hidden="true"></canvas>
+<canvas id="particles"></canvas>
 
 <!-- Navigation -->
 <nav id="navbar">
@@ -1238,7 +1238,7 @@
 </section>
 
 <!-- Contact -->
-<section id="contact" class="section-wipe">
+<section id="contact">
     <div class="section-num">05</div>
     <div class="section-inner">
         <div class="section-header reveal">
