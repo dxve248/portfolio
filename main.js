@@ -153,16 +153,30 @@
     // ===== HAMBURGER =====
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('navLinks');
+    function closeNav() {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+    }
     hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navLinks.classList.toggle('active');
-        hamburger.setAttribute('aria-expanded', navLinks.classList.contains('active') ? 'true' : 'false');
+        const open = !navLinks.classList.contains('active');
+        hamburger.classList.toggle('active', open);
+        navLinks.classList.toggle('active', open);
+        hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
     navLinks.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-            hamburger.classList.remove('active');
-            navLinks.classList.remove('active');
-        });
+        a.addEventListener('click', closeNav);
+    });
+    document.addEventListener('click', e => {
+        if (!navLinks.classList.contains('active')) return;
+        if (navLinks.contains(e.target) || hamburger.contains(e.target)) return;
+        closeNav();
+    });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && navLinks.classList.contains('active')) closeNav();
+    });
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 900 && navLinks.classList.contains('active')) closeNav();
     });
 
     // ===== TYPEWRITER EFFECT =====
@@ -464,18 +478,23 @@
     const particleCount = Math.min(80, Math.floor(window.innerWidth * window.innerHeight / 15000));
     for (let i = 0; i < particleCount; i++) particles.push(new Particle());
 
+    const LINK_DIST = 120, LINK_DIST2 = LINK_DIST * LINK_DIST;
     function connectParticles() {
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 120) {
+        const n = particles.length;
+        const px = new Float32Array(n), py = new Float32Array(n);
+        for (let i = 0; i < n; i++) { px[i] = particles[i].x; py[i] = particles[i].y; }
+        for (let i = 0; i < n; i++) {
+            for (let j = i + 1; j < n; j++) {
+                const dx = px[i] - px[j];
+                const dy = py[i] - py[j];
+                const d2 = dx * dx + dy * dy;
+                if (d2 < LINK_DIST2) {
+                    const dist = Math.sqrt(d2);
                     ctx.beginPath();
-                    ctx.strokeStyle = `rgba(124,106,255,${0.06 * (1 - dist / 120)})`;
+                    ctx.strokeStyle = `rgba(124,106,255,${0.06 * (1 - dist / LINK_DIST)})`;
                     ctx.lineWidth = 0.5;
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.moveTo(px[i], py[i]);
+                    ctx.lineTo(px[j], py[j]);
                     ctx.stroke();
                 }
             }
@@ -828,118 +847,119 @@
     });
 
     // ===== CASE STUDY DRAWER =====
+    // title + github link + image are read from each .project-card in the DOM (single source of truth).
     const CASE_STUDIES = [
         {
-            title: "PwC Brand Dashboard", cat: "Power BI · Data viz",
+            cat: "Power BI · Data viz",
             problem: "Senior-stakeholder reporting across the Academy division relied on scattered, inconsistent spreadsheets.",
             approach: "Designed an interactive Power BI dashboard aligned to PwC's global brand guidelines, with a governed model and drill-down views.",
             result: "Became the single source of truth for leadership reporting, meeting 100% of PwC's brand and compliance standards.",
             metrics: [{ v: "100%", l: "Compliance rate" }, { v: "1", l: "Source of truth" }],
-            stack: ["Power BI", "DAX", "Power Query"], link: ""
+            stack: ["Power BI", "DAX", "Power Query"]
         },
         {
-            title: "Automated Enquiry System", cat: "Automation · Zapier + n8n",
+            cat: "Automation · Zapier + n8n",
             problem: "Inbound enquiries were routed by hand - hours of processing, with human error in lead assignment.",
             approach: "Built an end-to-end routing pipeline in Zapier and n8n that captures, enriches and assigns each lead by rules.",
             result: "Cut manual processing from hours to seconds and eliminated mis-assignment, saving ~40% of handling time.",
             metrics: [{ v: "40%", l: "Time saved" }, { v: "Seconds", l: "From hours" }],
-            stack: ["Zapier", "n8n", "Webhooks"], link: ""
+            stack: ["Zapier", "n8n", "Webhooks"]
         },
         {
-            title: "Stock Report Automation", cat: "Automation · Power Automate",
+            cat: "Automation · Power Automate",
             problem: "Daily stock reports were compiled and distributed manually, risking missed or late delivery.",
             approach: "Implemented a Power Automate flow that compiles the report and emails it on schedule to every department head.",
             result: "Zero missed reports, with hours of manual work removed each week.",
             metrics: [{ v: "Daily", l: "Reports delivered" }, { v: "0", l: "Missed reports" }],
-            stack: ["Power Automate", "Excel", "Outlook"], link: ""
+            stack: ["Power Automate", "Excel", "Outlook"]
         },
         {
-            title: "IT Infrastructure Overhaul", cat: "Infrastructure · Networking",
+            cat: "Infrastructure · Networking",
             problem: "Aging servers and network architecture put Tally ERP reliability at risk.",
             approach: "Upgraded servers, re-architected the network and migrated Tally ERP with a phased plan and rollback safety.",
             result: "Maintained 100% uptime for Tally ERP - zero downtime through the entire migration.",
             metrics: [{ v: "0", l: "Downtime" }, { v: "100%", l: "Tally ERP uptime" }],
-            stack: ["Networking", "Tally ERP", "Windows Server"], link: ""
+            stack: ["Networking", "Tally ERP", "Windows Server"]
         },
         {
-            title: "Email Security Hardening", cat: "Security · Microsoft 365",
+            cat: "Security · Microsoft 365",
             problem: "Spoofing and phishing were reaching mailboxes, with no SPF, DKIM or DMARC enforcement.",
             approach: "Configured SPF, DKIM and DMARC across all domains and rolled out anti-phishing rules.",
             result: "Reduced email-based threats by 99.9% across the organisation.",
             metrics: [{ v: "99.9%", l: "Threat reduction" }, { v: "SPF/DKIM/DMARC", l: "Enforced" }],
-            stack: ["Microsoft 365", "DMARC", "Defender"], link: ""
+            stack: ["Microsoft 365", "DMARC", "Defender"]
         },
         {
-            title: "Workspace & M365 Migration", cat: "Migration · Cloud",
+            cat: "Migration · Cloud",
             problem: "A company-wide move from Google Workspace to Microsoft 365 with no room for data loss.",
             approach: "Led a phased migration of email, OneDrive, SharePoint and Teams with pre-flight checks and verification.",
             result: "Completed with zero data loss and minimal disruption to users.",
             metrics: [{ v: "0", l: "Data loss" }, { v: "4", l: "Workloads moved" }],
-            stack: ["Microsoft 365", "SharePoint", "Teams"], link: ""
+            stack: ["Microsoft 365", "SharePoint", "Teams"]
         },
         {
-            title: "Quotation Generator", cat: "Automation · n8n",
+            cat: "Automation · n8n",
             problem: "Manual quoting was slow and inconsistent in pricing.",
             approach: "Engineered an n8n system that pulls product data, applies pricing rules and sends branded PDF quotations.",
             result: "Cut quotation turnaround time by 3x.",
             metrics: [{ v: "3x", l: "Faster turnaround" }, { v: "PDF", l: "Auto-generated" }],
-            stack: ["n8n", "PDF generation", "Workflow"], link: ""
+            stack: ["n8n", "PDF generation", "Workflow"]
         },
         {
-            title: "DARB & MOIAT Compliance", cat: "Governance · UAE Gov",
+            cat: "Governance · UAE Gov",
             problem: "Strict UAE government mandates on the DARB toll system and MOIAT portal required provable, penalty-free compliance.",
             approach: "Managed regulatory compliance across both portals, with audits and security controls.",
             result: "100% adherence to UAE government mandates with zero penalties.",
             metrics: [{ v: "100%", l: "Compliance" }, { v: "0", l: "Penalties" }, { v: "A+", l: "Security rating" }],
-            stack: ["Compliance", "UAE Gov", "DARB"], link: ""
+            stack: ["Compliance", "UAE Gov", "DARB"]
         },
         {
-            title: "IT Helpdesk Ticketing System", cat: "Web app · Django",
+            cat: "Web app · Django",
             problem: "Support requests had no structured tracking, prioritisation or SLA visibility.",
             approach: "Built a Django helpdesk with role-based access, priority SLA tracking and live overdue detection, TOTP 2FA, a knowledge base, asset inventory and analytics with CSV/Excel export.",
             result: "A full-featured helpdesk with three user roles and live SLA reporting.",
             metrics: [{ v: "3", l: "User roles" }, { v: "TOTP", l: "2FA auth" }, { v: "CSV/Excel", l: "Export" }],
-            stack: ["Django", "SQLite", "Bootstrap 5", "Chart.js"], link: "https://github.com/dxve248/ticket-system"
+            stack: ["Django", "SQLite", "Bootstrap 5", "Chart.js"]
         },
         {
-            title: "Mini-SIEM", cat: "Security · Python",
+            cat: "Security · Python",
             problem: "Needed lightweight security monitoring without a heavyweight SIEM.",
             approach: "Built a Python pipeline for multi-format log ingestion, rule-based detection with alert suppression, incident correlation and risk scoring, surfaced in a Flask + Chart.js triage dashboard.",
             result: "Real-time, rules-driven triage with a 0-100 risk score per incident.",
             metrics: [{ v: "0-100", l: "Risk score" }, { v: "Real-time", l: "Event triage" }, { v: "Suppression", l: "Alert de-noise" }],
-            stack: ["Flask", "Detection Engine", "SQLite", "Chart.js"], link: "https://github.com/dxve248/mini-siem"
+            stack: ["Flask", "Detection Engine", "SQLite", "Chart.js"]
         },
         {
-            title: "PyVault — Zero-Knowledge Password Manager", cat: "Security · FastAPI",
+            cat: "Security · FastAPI",
             problem: "Password managers that decrypt server-side expose secrets to the host.",
             approach: "Built a self-hosted FastAPI vault where all encryption happens in the browser via WebCrypto + Argon2id - master passwords never reach the server. Added TOTP 2FA, rate limiting and encrypted backups.",
             result: "A zero-knowledge vault backed by 33 automated tests.",
             metrics: [{ v: "AES-256", l: "Encryption" }, { v: "33", l: "Automated tests" }, { v: "Zero", l: "Server-side secrets" }],
-            stack: ["FastAPI", "WebCrypto", "Argon2id", "TOTP"], link: "https://github.com/dxve248/pw-manager"
+            stack: ["FastAPI", "WebCrypto", "Argon2id", "TOTP"]
         },
         {
-            title: "Windows Debloater", cat: "Desktop app · C# WPF",
+            cat: "Desktop app · C# WPF",
             problem: "Removing Windows 11 bloatware by hand is tedious and risky for non-technical users.",
             approach: "Built a single-file C#/WPF tool that scans, previews and applies a safe plan with an automatic restore point and undo manifest; a hardcoded blocklist protects critical OS components.",
             result: "One-click, reversible debloat with a dotnet-tested safety model.",
             metrics: [{ v: "1-click", l: "Safe debloat" }, { v: "Auto", l: "Restore point" }],
-            stack: ["C#", "WPF", ".NET"], link: "https://github.com/dxve248/windows-debloaterz"
+            stack: ["C#", "WPF", ".NET"]
         },
         {
-            title: "Secure Task Manager", cat: "Full-stack · Node & React",
+            cat: "Full-stack · Node & React",
             problem: "Most task apps treat authentication as an afterthought.",
             approach: "Built a full-stack MERN task manager hardened with JWT auth, rotating refresh tokens, field-level AES encryption, rate limiting and email-enumeration protection; validated with OWASP ZAP DAST scanning.",
             result: "Secure-by-default task management with role-scoped access.",
             metrics: [{ v: "JWT", l: "Secure auth" }, { v: "AES", l: "Field-level crypto" }, { v: "ZAP", l: "DAST scanned" }],
-            stack: ["Node.js", "Express", "React", "SQLite"], link: "https://github.com/dxve248/STM"
+            stack: ["Node.js", "Express", "React", "SQLite"]
         },
         {
-            title: "Real-Time Object Detection", cat: "AI · Computer vision",
+            cat: "AI · Computer vision",
             problem: "Needed a production-ready computer-vision pipeline, not a notebook.",
             approach: "Built an end-to-end YOLOv8 pipeline: MLflow-tracked training, a FastAPI REST API, WebSocket streaming, A/B testing, drift detection, GPU optimisation and Docker + GitHub Actions CI/CD.",
             result: "A low-latency, reproducible detection service.",
             metrics: [{ v: "YOLOv8", l: "Model" }, { v: "WebSocket", l: "Streaming" }, { v: "CI/CD", l: "Docker + Actions" }],
-            stack: ["YOLOv8", "PyTorch", "FastAPI", "Docker"], link: "https://github.com/dxve248/Object-Detection"
+            stack: ["YOLOv8", "PyTorch", "FastAPI", "Docker"]
         }
     ];
 
@@ -969,12 +989,16 @@
         function openCase(i) {
             const p = CASE_STUDIES[i];
             if (!p) return;
-            caseLastFocus = document.activeElement;
             const card = document.querySelectorAll('.project-card')[i];
+            const titleEl = card && card.querySelector('h3');
+            const title = titleEl ? titleEl.textContent.trim() : '';
+            const gLink = card && card.querySelector('.github-link');
+            const link = gLink ? gLink.getAttribute('href') : '';
+            caseLastFocus = document.activeElement;
             const img = card && card.querySelector('img');
-            if (img) { caseImage.src = img.currentSrc || img.src; caseImage.alt = p.title; }
+            if (img) { caseImage.src = img.currentSrc || img.src; caseImage.alt = title; }
             caseEyebrow.textContent = p.cat;
-            caseTitle.textContent = p.title;
+            caseTitle.textContent = title;
             caseMetrics.replaceChildren();
             (p.metrics || []).forEach(m => {
                 const c = makeEl('div', 'case-metric');
@@ -987,10 +1011,11 @@
             caseResult.textContent = p.result;
             caseStack.replaceChildren();
             (p.stack || []).forEach(s => caseStack.appendChild(makeEl('span', 'case-tech', s)));
-            if (p.link) { caseLink.href = p.link; caseLink.hidden = false; }
+            if (link) { caseLink.href = link; caseLink.hidden = false; }
             else { caseLink.hidden = true; caseLink.removeAttribute('href'); }
             caseDrawer.classList.add('open');
             caseOverlay.classList.add('open');
+            caseDrawer.removeAttribute('inert');
             caseDrawer.setAttribute('aria-hidden', 'false');
             document.body.classList.add('case-open');
             if (caseScroll) caseScroll.scrollTop = 0;
@@ -1000,6 +1025,7 @@
         function closeCase() {
             caseDrawer.classList.remove('open');
             caseOverlay.classList.remove('open');
+            caseDrawer.setAttribute('inert', '');
             caseDrawer.setAttribute('aria-hidden', 'true');
             document.body.classList.remove('case-open');
             if (caseLastFocus && caseLastFocus.focus) caseLastFocus.focus();
@@ -1037,7 +1063,7 @@
             if (visual) {
                 visual.setAttribute('role', 'button');
                 visual.setAttribute('tabindex', '0');
-                visual.setAttribute('aria-label', 'Open case study: ' + (CASE_STUDIES[i] ? CASE_STUDIES[i].title : 'project'));
+                visual.setAttribute('aria-label', 'Open case study: ' + (card.querySelector('h3') ? card.querySelector('h3').textContent.trim() : 'project'));
                 visual.addEventListener('click', () => openCase(i));
                 visual.addEventListener('keydown', e => {
                     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCase(i); }
@@ -1084,6 +1110,33 @@
             ctaBtn.classList.remove('pulse-confirm');
             void ctaBtn.offsetWidth;
             ctaBtn.classList.add('pulse-confirm');
+        });
+    }
+
+    // ===== CONTACT FORM (mailto composition, no backend) =====
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        const cfStatus = document.getElementById('cfStatus');
+        const setStatus = (msg, isError) => {
+            if (!cfStatus) return;
+            cfStatus.textContent = msg;
+            cfStatus.classList.toggle('error', !!isError);
+        };
+        contactForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const fields = contactForm.elements;
+            const name = fields.name.value.trim();
+            const email = fields.email.value.trim();
+            const message = fields.message.value.trim();
+            if (fields.company.value) return; // honeypot
+            if (!name || !email || !message) { setStatus('Please fill in all fields.', true); return; }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus('Please enter a valid email address.', true); return; }
+            const subject = 'Portfolio enquiry from ' + name;
+            const body = message + '\n\n- ' + name + '\n' + email;
+            window.location.href = 'mailto:cdavesicat22@gmail.com?subject=' +
+                encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+            setStatus('Opening your email client...');
+            contactForm.reset();
         });
     }
 

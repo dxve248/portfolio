@@ -1,0 +1,18 @@
+{
+  "name": "christian-dave-sicat-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static portfolio for Christian Dave Sicat - IT Administrator & AI Automation Specialist.",
+  "scripts": {
+    "check": "node scripts/ci-check.mjs",
+    "lint:html": "html-validate index.html cv.html 404.html",
+    "lint:js": "eslint main.js assets/hero-mesh.js",
+    "lint": "npm run check && npm run lint:html && npm run lint:js",
+    "build": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "eslint": "^9.17.0",
+    "html-validate": "^9.0.0"
+  }
+}

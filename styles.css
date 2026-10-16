@@ -890,7 +890,10 @@
         .tile-phone { --cc: #7c6aff; }
         .tile-linkedin { --cc: #0a66c2; }
         .tile-github { --cc: #c9d1d9; }
-        .tile-location { --cc: #a78bfa; }
+        .tile-location { --cc: #a78bfa; cursor: default; }
+        .tile-location:hover { transform: none; box-shadow: none; border-color: var(--border); }
+        .tile-location:hover::after { left: -80%; }
+        .tile-location:hover .contact-icon-wrap { transform: none; }
 
         /* ===== FOOTER ===== */
         footer {
@@ -2080,3 +2083,53 @@
             40% { transform: scale(0.955); }
             100% { transform: scale(1); }
         }
+
+        /* ===== INLINE SVG ICONS ===== */
+        .icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+        .icon {
+            width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em;
+            fill: none; stroke: currentColor; stroke-width: 2;
+            stroke-linecap: round; stroke-linejoin: round; flex: none;
+        }
+        .hire-icon { color: var(--accent); }
+        .hire-icon .icon { width: 26px; height: 26px; }
+        .flow-icon { color: var(--accent); }
+        .flow-icon .icon { width: 28px; height: 28px; }
+        .float-icon .icon { width: 1em; height: 1em; }
+        .flow-chip { display: inline-flex; align-items: center; gap: 0.45rem; }
+        .flow-chip .icon { width: 15px; height: 15px; color: var(--accent); }
+
+        /* ===== SKIP LINK ===== */
+        .skip-link {
+            position: fixed; top: 0.75rem; left: 0.75rem; z-index: 20000;
+            transform: translateY(-220%);
+            background: var(--accent); color: #fff; font-weight: 600; font-size: 0.85rem;
+            padding: 0.65rem 1.1rem; border-radius: 10px; text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            transition: transform var(--dur-2) var(--ease-out);
+        }
+        .skip-link:focus { transform: translateY(0); outline: 2px solid #fff; outline-offset: 2px; }
+        #about:focus { outline: none; }
+
+        /* ===== CONTACT FORM ===== */
+        .contact-form { display: flex; flex-direction: column; gap: 0.75rem; width: 100%; max-width: 44ch; margin-top: 0.35rem; }
+        .cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        .cf-field { display: flex; flex-direction: column; gap: 0.35rem; }
+        .cf-field span { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); }
+        .cf-field input, .cf-field textarea {
+            font: inherit; font-size: 0.9rem; color: var(--text);
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 10px; padding: 0.7rem 0.85rem; width: 100%;
+            transition: border-color var(--dur-2), box-shadow var(--dur-2);
+        }
+        .cf-field textarea { resize: vertical; min-height: 84px; }
+        .cf-field input::placeholder, .cf-field textarea::placeholder { color: var(--text-3); }
+        .cf-field input:focus, .cf-field textarea:focus {
+            outline: none; border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        .contact-form .btn { align-self: flex-start; }
+        .cf-status { font-size: 0.82rem; color: var(--green); min-height: 1.1em; }
+        .cf-status.error { color: #f87171; }
+        .cf-honey { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+        @media (max-width: 560px) { .cf-row { grid-template-columns: 1fr; } }
